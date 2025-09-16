@@ -111,15 +111,34 @@ The package includes automated workflows:
 - **TextEntry**: Use `Filament\Infolists\Components\TextEntry` for read-only fields
 - **String Helper**: Use `str($state)->slug()` instead of `Str::slug()`
 
-### Action Structure Changes
-- **New Action Imports**:
+### Action Structure Changes (CRITICAL for Filament 4)
+- **Action Imports - IMPORTANT**: Actions are imported from `Filament\Actions\` NOT from `Filament\Tables\Actions\`:
   ```php
+  use Filament\Actions\Action;  // For custom actions
   use Filament\Actions\BulkActionGroup;
   use Filament\Actions\DeleteAction;
+  use Filament\Actions\DeleteBulkAction;
   use Filament\Actions\EditAction;
   use Filament\Actions\ViewAction;
+  // NOT: use Filament\Tables\Actions\Action; ❌ (This class doesn't exist in Filament 4)
   ```
-- **Action Methods**: Use `recordActions()` and `toolbarActions()` instead of `actions()` and `bulkActions()`
+- **Table Methods for Actions**:
+  - Use `->recordActions([...])` instead of `->actions([...])`
+  - Use `->toolbarActions([...])` instead of `->bulkActions([...])`
+- **Usage in Table Classes**: Actions are used directly without `Tables\Actions\` prefix:
+  ```php
+  ->recordActions([
+      Action::make('custom_action'),  // NOT Tables\Actions\Action
+      ViewAction::make(),
+      EditAction::make(),
+      DeleteAction::make(),
+  ])
+  ->toolbarActions([
+      BulkActionGroup::make([
+          DeleteBulkAction::make(),
+      ]),
+  ])
+  ```
 - **RelationManagers**: Form method uses `Schema` parameter, table method uses `Table`
 
 ### Code Quality Best Practices

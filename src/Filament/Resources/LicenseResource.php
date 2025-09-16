@@ -11,17 +11,32 @@ use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource\Schemas\LicenseForm;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource\Tables\LicenseTable;
 use LucaLongo\Licensing\Enums\LicenseStatus;
-use LucaLongo\Licensing\Models\License;
 
 class LicenseResource extends Resource
 {
-    protected static ?string $model = License::class;
+    public static function getModel(): string
+    {
+        return config('licensing.models.license');
+    }
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-key';
 
-    protected static ?string $navigationLabel = 'Licenses';
-
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('laravel-licensing-filament-manager::licensing.resources.license.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('laravel-licensing-filament-manager::licensing.resources.license.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('laravel-licensing-filament-manager::licensing.resources.license.plural_model_label');
+    }
 
     protected static ?string $recordTitleAttribute = 'id';
 

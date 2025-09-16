@@ -10,17 +10,32 @@ use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeRes
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\RelationManagers;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Schemas\LicenseScopeForm;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Tables\LicenseScopeTable;
-use LucaLongo\Licensing\Models\LicenseScope;
 
 class LicenseScopeResource extends Resource
 {
-    protected static ?string $model = LicenseScope::class;
+    public static function getModel(): string
+    {
+        return config('licensing.models.license_scope');
+    }
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-group';
 
-    protected static ?string $navigationLabel = 'License Scopes';
-
     protected static ?int $navigationSort = 0;
+
+    public static function getNavigationLabel(): string
+    {
+        return __('laravel-licensing-filament-manager::licensing.resources.license_scope.navigation_label');
+    }
+
+    public static function getModelLabel(): string
+    {
+        return __('laravel-licensing-filament-manager::licensing.resources.license_scope.model_label');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('laravel-licensing-filament-manager::licensing.resources.license_scope.plural_model_label');
+    }
 
     protected static ?string $recordTitleAttribute = 'name';
 

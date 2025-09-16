@@ -19,7 +19,7 @@
         "php": "^8.4",
         "filament/filament": "^4.0",
         "illuminate/contracts": "^11.0||^12.0",
-        "masterix21/laravel-licensing": "^1.0",
+        "masterix21/laravel-licensing": "@dev",
         "spatie/laravel-package-tools": "^1.16"
     },
     "require-dev": {

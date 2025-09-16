@@ -2,6 +2,12 @@
 
 namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Tables;
 
+use Filament\Actions\Action;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -112,8 +118,8 @@ class LicenseScopeTable
                     ->label(__('laravel-licensing-filament-manager::license-scope.filters.has_licenses'))
                     ->query(fn (Builder $query) => $query->has('licenses')),
             ])
-            ->actions([
-                Tables\Actions\Action::make('rotate_keys')
+            ->recordActions([
+                Action::make('rotate_keys')
                     ->label(__('laravel-licensing-filament-manager::license-scope.actions.rotate_keys'))
                     ->icon('heroicon-o-arrow-path')
                     ->color('warning')
@@ -125,18 +131,18 @@ class LicenseScopeTable
                         $record->rotateKeys(__('laravel-licensing-filament-manager::license-scope.actions.manual_rotation'));
                     }),
 
-                Tables\Actions\ViewAction::make()
+                ViewAction::make()
                     ->label(__('laravel-licensing-filament-manager::common.actions.view')),
 
-                Tables\Actions\EditAction::make()
+                EditAction::make()
                     ->label(__('laravel-licensing-filament-manager::common.actions.edit')),
 
-                Tables\Actions\DeleteAction::make()
+                DeleteAction::make()
                     ->label(__('laravel-licensing-filament-manager::common.actions.delete')),
             ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make()
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make()
                         ->label(__('laravel-licensing-filament-manager::common.actions.delete_selected')),
                 ]),
             ])
