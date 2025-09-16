@@ -32,7 +32,7 @@ class LicensingStatistics extends Page
         ];
     }
 
-    public function getColumns(): int | array
+    public function getColumns(): int|array
     {
         return 2;
     }

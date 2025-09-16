@@ -10,15 +10,15 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
 {
     use EvaluatesClosures;
 
-    protected string | \Closure | null $navigationGroup = null;
+    protected string|\Closure|null $navigationGroup = null;
 
-    protected int | \Closure | null $navigationSort = null;
+    protected int|\Closure|null $navigationSort = null;
 
-    protected bool | \Closure $enableStatistics = true;
+    protected bool|\Closure $enableStatistics = true;
 
-    protected bool | \Closure $enableBulkActions = true;
+    protected bool|\Closure $enableBulkActions = true;
 
-    protected bool | \Closure $enableWidgets = true;
+    protected bool|\Closure $enableWidgets = true;
 
     public function getId(): string
     {
@@ -48,35 +48,35 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
         return filament(app(static::class)->getId());
     }
 
-    public function navigationGroup(string | \Closure | null $group): static
+    public function navigationGroup(string|\Closure|null $group): static
     {
         $this->navigationGroup = $group;
 
         return $this;
     }
 
-    public function navigationSort(int | \Closure | null $sort): static
+    public function navigationSort(int|\Closure|null $sort): static
     {
         $this->navigationSort = $sort;
 
         return $this;
     }
 
-    public function enableStatistics(bool | \Closure $condition = true): static
+    public function enableStatistics(bool|\Closure $condition = true): static
     {
         $this->enableStatistics = $condition;
 
         return $this;
     }
 
-    public function enableBulkActions(bool | \Closure $condition = true): static
+    public function enableBulkActions(bool|\Closure $condition = true): static
     {
         $this->enableBulkActions = $condition;
 
         return $this;
     }
 
-    public function enableWidgets(bool | \Closure $condition = true): static
+    public function enableWidgets(bool|\Closure $condition = true): static
     {
         $this->enableWidgets = $condition;
 
