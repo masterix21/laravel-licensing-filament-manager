@@ -2,17 +2,22 @@
 
 namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\RelationManagers;
 
+use DateTimeImmutable;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use LucaLongo\Licensing\Enums\KeyStatus;
+use LucaLongo\Licensing\Models\LicenseScope;
 use LucaLongo\Licensing\Models\LicensingKey;
+use LucaLongo\Licensing\Services\CertificateAuthorityService;
 
 class SigningKeysRelationManager extends RelationManager
 {
@@ -29,11 +34,7 @@ class SigningKeysRelationManager extends RelationManager
 
                 Forms\Components\Select::make('status')
                     ->label(__('laravel-licensing-filament-manager::licensing-key.fields.status'))
-                    ->options([
-                        'active' => __('laravel-licensing-filament-manager::licensing-key.status.active'),
-                        'revoked' => __('laravel-licensing-filament-manager::licensing-key.status.revoked'),
-                        'compromised' => __('laravel-licensing-filament-manager::licensing-key.status.compromised'),
-                    ])
+                    ->options(KeyStatus::class)
                     ->required(),
 
                 Forms\Components\DateTimePicker::make('valid_from')
@@ -46,8 +47,8 @@ class SigningKeysRelationManager extends RelationManager
 
                 Forms\Components\Textarea::make('revocation_reason')
                     ->label(__('laravel-licensing-filament-manager::licensing-key.fields.revocation_reason'))
-                    ->visible(fn (Get $get) => in_array($get('status'), ['revoked', 'compromised']))
-                    ->required(fn (Get $get) => in_array($get('status'), ['revoked', 'compromised'])),
+                    ->visible(fn (Get $get) => $get('status') === KeyStatus::Revoked->value)
+                    ->required(fn (Get $get) => $get('status') === KeyStatus::Revoked->value),
             ]);
     }
 
@@ -66,10 +67,11 @@ class SigningKeysRelationManager extends RelationManager
                     ->badge()
                     ->label(__('laravel-licensing-filament-manager::licensing-key.fields.status'))
                     ->colors([
-                        'success' => 'active',
-                        'danger' => ['revoked', 'compromised'],
+                        'success' => KeyStatus::Active->value,
+                        'danger' => KeyStatus::Revoked->value,
+                        'warning' => KeyStatus::Expired->value,
                     ])
-                    ->formatStateUsing(fn (string $state) => __("laravel-licensing-filament-manager::licensing-key.status.{$state}")),
+                    ->formatStateUsing(fn (KeyStatus $state) => __("laravel-licensing-filament-manager::licensing-key.status.{$state->value}")),
 
                 Tables\Columns\TextColumn::make('algorithm')
                     ->label(__('laravel-licensing-filament-manager::licensing-key.fields.algorithm'))
@@ -101,11 +103,7 @@ class SigningKeysRelationManager extends RelationManager
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label(__('laravel-licensing-filament-manager::licensing-key.fields.status'))
-                    ->options([
-                        'active' => __('laravel-licensing-filament-manager::licensing-key.status.active'),
-                        'revoked' => __('laravel-licensing-filament-manager::licensing-key.status.revoked'),
-                        'compromised' => __('laravel-licensing-filament-manager::licensing-key.status.compromised'),
-                    ]),
+                    ->options(KeyStatus::class),
 
                 Tables\Filters\Filter::make('expired')
                     ->label(__('laravel-licensing-filament-manager::licensing-key.filters.expired'))
@@ -120,12 +118,48 @@ class SigningKeysRelationManager extends RelationManager
                     ->modalHeading(__('laravel-licensing-filament-manager::licensing-key.actions.generate_new_modal_heading'))
                     ->modalDescription(__('laravel-licensing-filament-manager::licensing-key.actions.generate_new_modal_description'))
                     ->action(function () {
+                        /** @var LicenseScope $licenseScope */
                         $licenseScope = $this->getOwnerRecord();
-                        $newKey = LicensingKey::generateSigningKey(
-                            kid: $licenseScope->slug.'-'.now()->format('Y-m-d-His'),
-                            scope: $licenseScope
-                        );
-                        $newKey->save();
+
+                        $validFrom = new DateTimeImmutable();
+                        $validUntil = $validFrom->modify(sprintf('+%d days', max(1, $licenseScope->key_rotation_days ?? 30)));
+
+                        $kid = $licenseScope->slug.'-'.now()->format('YmdHis');
+
+                        try {
+                            $key = LicensingKey::generateSigningKey($kid, $licenseScope);
+                            $key->valid_from = $validFrom;
+                            $key->valid_until = $validUntil;
+                            $key->status = KeyStatus::Active;
+
+                            /** @var CertificateAuthorityService $certificateAuthority */
+                            $certificateAuthority = app(CertificateAuthorityService::class);
+
+                            $certificate = $certificateAuthority->issueSigningCertificate(
+                                $key->getPublicKey(),
+                                $kid,
+                                $validFrom,
+                                $validUntil,
+                                $licenseScope
+                            );
+
+                            $key->certificate = $certificate;
+                            $key->save();
+
+                            Notification::make()
+                                ->title(__('laravel-licensing-filament-manager::licensing-key.notifications.generated'))
+                                ->body(__('laravel-licensing-filament-manager::licensing-key.notifications.generated_body', ['kid' => $kid]))
+                                ->success()
+                                ->send();
+                        } catch (\Throwable $exception) {
+                            report($exception);
+
+                            Notification::make()
+                                ->title(__('laravel-licensing-filament-manager::licensing-key.notifications.failed'))
+                                ->body($exception->getMessage())
+                                ->danger()
+                                ->send();
+                        }
                     }),
             ])
             ->recordActions([
@@ -133,7 +167,7 @@ class SigningKeysRelationManager extends RelationManager
                     ->label(__('laravel-licensing-filament-manager::licensing-key.actions.revoke'))
                     ->icon('heroicon-o-x-mark')
                     ->color('danger')
-                    ->visible(fn (LicensingKey $record) => $record->status === 'active')
+                    ->visible(fn (LicensingKey $record) => $record->status === KeyStatus::Active)
                     ->requiresConfirmation()
                     ->modalHeading(__('laravel-licensing-filament-manager::licensing-key.actions.revoke_modal_heading'))
                     ->modalDescription(__('laravel-licensing-filament-manager::licensing-key.actions.revoke_modal_description'))
@@ -143,11 +177,12 @@ class SigningKeysRelationManager extends RelationManager
                             ->required(),
                     ])
                     ->action(function (LicensingKey $record, array $data) {
-                        $record->update([
-                            'status' => 'revoked',
-                            'revoked_at' => now(),
-                            'revocation_reason' => $data['reason'],
-                        ]);
+                        $record->revoke($data['reason']);
+
+                        Notification::make()
+                            ->title(__('laravel-licensing-filament-manager::licensing-key.notifications.revoked'))
+                            ->warning()
+                            ->send();
                     }),
 
                 ViewAction::make()
@@ -170,14 +205,15 @@ class SigningKeysRelationManager extends RelationManager
                         ])
                         ->action(function (array $data, $records) {
                             foreach ($records as $record) {
-                                if ($record->status === 'active') {
-                                    $record->update([
-                                        'status' => 'revoked',
-                                        'revoked_at' => now(),
-                                        'revocation_reason' => $data['reason'],
-                                    ]);
+                                if ($record->status === KeyStatus::Active) {
+                                    $record->revoke($data['reason']);
                                 }
                             }
+
+                            Notification::make()
+                                ->title(__('laravel-licensing-filament-manager::licensing-key.notifications.revoked'))
+                                ->warning()
+                                ->send();
                         }),
                 ]),
             ])

@@ -14,7 +14,7 @@ return [
     'status' => [
         'active' => 'Active',
         'revoked' => 'Revoked',
-        'compromised' => 'Compromised',
+        'expired' => 'Expired',
     ],
 
     'actions' => [
@@ -29,5 +29,12 @@ return [
 
     'filters' => [
         'expired' => 'Expired Keys',
+    ],
+
+    'notifications' => [
+        'generated' => 'Signing key generated successfully.',
+        'generated_body' => 'New signing key issued: :kid',
+        'revoked' => 'Signing key revoked.',
+        'failed' => 'Unable to generate signing key.',
     ],
 ];

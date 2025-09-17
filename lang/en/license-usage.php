@@ -27,4 +27,12 @@ return [
         'active' => 'Active',
         'revoked' => 'Revoked',
     ],
+
+    'help' => [
+        'usage_fingerprint' => 'Typically a hash of device or installation identifiers.',
+    ],
+
+    'notifications' => [
+        'revoked' => 'Usage revoked successfully.',
+    ],
 ];

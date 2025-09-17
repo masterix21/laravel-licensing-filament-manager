@@ -2,7 +2,10 @@
 
 namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource\Pages;
 
+use Carbon\CarbonInterface;
 use Filament\Actions;
+use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
 use LucaLongo\Licensing\Enums\LicenseStatus;
@@ -21,11 +24,13 @@ class ViewLicense extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn () => $this->record->status === LicenseStatus::Pending)
                 ->action(function () {
-                    $this->record->update([
-                        'status' => LicenseStatus::Active,
-                        'activated_at' => now(),
-                    ]);
+                    $this->record->activate();
                     $this->refreshFormData(['status', 'activated_at']);
+
+                    Notification::make()
+                        ->title(__('laravel-licensing-filament-manager::license.notifications.activated'))
+                        ->success()
+                        ->send();
                 }),
 
             Actions\Action::make('suspend')
@@ -35,8 +40,13 @@ class ViewLicense extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn () => $this->record->status === LicenseStatus::Active)
                 ->action(function () {
-                    $this->record->update(['status' => LicenseStatus::Suspended]);
+                    $this->record->suspend();
                     $this->refreshFormData(['status']);
+
+                    Notification::make()
+                        ->title(__('laravel-licensing-filament-manager::license.notifications.suspended'))
+                        ->warning()
+                        ->send();
                 }),
 
             Actions\Action::make('renew')
@@ -44,7 +54,7 @@ class ViewLicense extends ViewRecord
                 ->icon('heroicon-o-arrow-path')
                 ->color('info')
                 ->form([
-                    \Filament\Forms\Components\TextInput::make('duration_days')
+                    Forms\Components\TextInput::make('duration_days')
                         ->label(__('laravel-licensing-filament-manager::license.fields.duration_days'))
                         ->numeric()
                         ->minValue(1)
@@ -52,16 +62,56 @@ class ViewLicense extends ViewRecord
                         ->required(),
                 ])
                 ->action(function (array $data) {
-                    $newExpiresAt = $this->record->expires_at && $this->record->expires_at->isFuture()
-                        ? $this->record->expires_at->addDays($data['duration_days'])
-                        : now()->addDays($data['duration_days']);
+                    $baseDate = $this->record->expires_at instanceof CarbonInterface && $this->record->expires_at->isFuture()
+                        ? $this->record->expires_at
+                        : now();
 
-                    $this->record->update([
-                        'expires_at' => $newExpiresAt,
-                        'status' => LicenseStatus::Active,
-                    ]);
+                    $newExpiresAt = $baseDate->copy()->addDays($data['duration_days']);
+
+                    $this->record->renew($newExpiresAt);
 
                     $this->refreshFormData(['expires_at', 'status']);
+
+                    Notification::make()
+                        ->title(__('laravel-licensing-filament-manager::license.notifications.renewed'))
+                        ->success()
+                        ->send();
+                }),
+
+            Actions\Action::make('show_key')
+                ->label(__('laravel-licensing-filament-manager::license.actions.show_key'))
+                ->icon('heroicon-o-key')
+                ->visible(fn () => $this->record->canRetrieveKey())
+                ->action(function () {
+                    $key = $this->record->retrieveKey();
+
+                    Notification::make()
+                        ->title(__('laravel-licensing-filament-manager::license.notifications.key_retrieved'))
+                        ->body($key
+                            ? __('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $key])
+                            : __('laravel-licensing-filament-manager::license.notifications.key_unavailable'))
+                        ->success()
+                        ->persistent()
+                        ->send();
+                }),
+
+            Actions\Action::make('regenerate_key')
+                ->label(__('laravel-licensing-filament-manager::license.actions.regenerate_key'))
+                ->icon('heroicon-o-arrow-path')
+                ->color('gray')
+                ->visible(fn () => $this->record->canRegenerateKey())
+                ->requiresConfirmation()
+                ->action(function () {
+                    $newKey = $this->record->regenerateKey();
+
+                    Notification::make()
+                        ->title(__('laravel-licensing-filament-manager::license.notifications.key_regenerated'))
+                        ->body(__('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $newKey]))
+                        ->success()
+                        ->persistent()
+                        ->send();
+
+                    $this->refreshFormData(['key_hash']);
                 }),
 
             Actions\EditAction::make()

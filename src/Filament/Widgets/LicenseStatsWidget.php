@@ -15,8 +15,18 @@ class LicenseStatsWidget extends BaseWidget
     protected function getStats(): array
     {
         $totalLicenses = License::count();
-        $activeLicenses = License::where('status', LicenseStatus::Active)->count();
-        $expiringLicenses = License::where('status', LicenseStatus::Active)
+
+        $activeLicenses = License::query()
+            ->whereIn('status', [LicenseStatus::Active, LicenseStatus::Grace])
+            ->where(function ($query) {
+                $query
+                    ->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
+            })
+            ->count();
+
+        $expiringLicenses = License::query()
+            ->where('status', LicenseStatus::Active)
             ->whereBetween('expires_at', [now(), now()->addDays(30)])
             ->count();
 

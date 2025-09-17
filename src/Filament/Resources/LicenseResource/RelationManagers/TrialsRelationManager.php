@@ -9,6 +9,7 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use LucaLongo\Licensing\Enums\TrialStatus;
 
 class TrialsRelationManager extends RelationManager
 {
@@ -34,14 +35,20 @@ class TrialsRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('laravel-licensing-filament-manager::license-trial.fields.status'))
-                    ->badge(),
+                    ->badge()
+                    ->colors([
+                        'success' => TrialStatus::Active,
+                        'info' => TrialStatus::Converted,
+                        'danger' => TrialStatus::Expired,
+                        'warning' => TrialStatus::Cancelled,
+                    ]),
 
                 Tables\Columns\TextColumn::make('started_at')
                     ->label(__('laravel-licensing-filament-manager::license-trial.fields.started_at'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
 
-                Tables\Columns\TextColumn::make('ends_at')
+                Tables\Columns\TextColumn::make('expires_at')
                     ->label(__('laravel-licensing-filament-manager::license-trial.fields.ends_at'))
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),

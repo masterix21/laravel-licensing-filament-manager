@@ -14,6 +14,7 @@ return [
     'fields' => [
         'name' => 'Name',
         'slug' => 'Slug',
+        'slug_help' => 'URL-friendly identifier (lowercase letters, numbers, and hyphens only)',
         'identifier' => 'Identifier',
         'identifier_help' => 'Unique identifier for API usage (e.g., com.company.product)',
         'description' => 'Description',

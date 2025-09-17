@@ -54,6 +54,7 @@ class LicenseScopeResource extends Resource
         return [
             RelationManagers\LicensesRelationManager::class,
             RelationManagers\SigningKeysRelationManager::class,
+            RelationManagers\TemplatesRelationManager::class,
         ];
     }
 

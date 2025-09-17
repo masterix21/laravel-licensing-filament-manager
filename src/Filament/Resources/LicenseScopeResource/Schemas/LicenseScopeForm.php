@@ -3,7 +3,6 @@
 namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Schemas;
 
 use Filament\Forms;
-use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -22,12 +21,12 @@ class LicenseScopeForm
                             ->required()
                             ->maxLength(255)
                             ->live(onBlur: true)
-                            ->afterStateUpdated(function (string $operation, $state, Set $set) {
-                                if ($operation !== 'create') {
+                            ->afterStateUpdated(function (?string $state, Set $set) {
+                                if (! $state) {
                                     return;
                                 }
 
-                                $set('slug', str($state)->slug());
+                                $set('slug', str($state)->slug()->toString());
                             }),
 
                         Forms\Components\TextInput::make('slug')
@@ -35,7 +34,8 @@ class LicenseScopeForm
                             ->required()
                             ->maxLength(255)
                             ->unique(LicenseScope::class, 'slug', ignoreRecord: true)
-                            ->rules(['regex:/^[a-z0-9-]+$/']),
+                            ->regex('/^[a-z0-9]+(?:-[a-z0-9]+)*$/')
+                            ->helperText(__('laravel-licensing-filament-manager::license-scope.fields.slug_help')),
 
                         Forms\Components\TextInput::make('identifier')
                             ->label(__('laravel-licensing-filament-manager::license-scope.fields.identifier'))
@@ -46,7 +46,8 @@ class LicenseScopeForm
                         Forms\Components\Textarea::make('description')
                             ->label(__('laravel-licensing-filament-manager::license-scope.fields.description'))
                             ->maxLength(65535)
-                            ->rows(3),
+                            ->rows(3)
+                            ->columnSpanFull(),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('laravel-licensing-filament-manager::license-scope.fields.is_active'))
@@ -103,22 +104,6 @@ class LicenseScopeForm
                     ->columns(3)
                     ->hiddenOn('create'),
 
-                Section::make(__('laravel-licensing-filament-manager::license-scope.form.statistics'))
-                    ->schema([
-                        TextEntry::make('licenses_count')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.licenses_count'))
-                            ->state(fn (?LicenseScope $record) => $record?->licenses()->count() ?? 0),
-
-                        TextEntry::make('active_licenses_count')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.active_licenses_count'))
-                            ->state(fn (?LicenseScope $record) => $record?->licenses()->where('status', 'active')->count() ?? 0),
-
-                        TextEntry::make('signing_keys_count')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.signing_keys_count'))
-                            ->state(fn (?LicenseScope $record) => $record?->signingKeys()->count() ?? 0),
-                    ])
-                    ->columns(3)
-                    ->hiddenOn('create'),
 
                 Section::make(__('laravel-licensing-filament-manager::license-scope.form.metadata'))
                     ->schema([

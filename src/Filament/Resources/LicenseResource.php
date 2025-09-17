@@ -72,7 +72,14 @@ class LicenseResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('status', LicenseStatus::Active)->count();
+        return static::getModel()::query()
+            ->where('status', LicenseStatus::Active)
+            ->where(function ($query) {
+                $query
+                    ->whereNull('expires_at')
+                    ->orWhere('expires_at', '>', now());
+            })
+            ->count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

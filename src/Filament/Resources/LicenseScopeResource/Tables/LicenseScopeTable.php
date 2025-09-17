@@ -19,8 +19,14 @@ class LicenseScopeTable
     {
         return $table
             ->columns([
+                Tables\Columns\IconColumn::make('is_active')
+                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.is_active'))
+                    ->boolean()
+                    ->sortable(),
+
                 Tables\Columns\TextColumn::make('name')
                     ->label(__('laravel-licensing-filament-manager::license-scope.fields.name'))
+                    ->description(fn ($record) => $record->identifier)
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
@@ -32,22 +38,6 @@ class LicenseScopeTable
                     ->copyable()
                     ->badge()
                     ->color('gray'),
-
-                Tables\Columns\TextColumn::make('identifier')
-                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.identifier'))
-                    ->searchable()
-                    ->sortable()
-                    ->limit(30)
-                    ->tooltip(function (Tables\Columns\TextColumn $column): ?string {
-                        $state = $column->getState();
-
-                        return strlen($state) > 30 ? $state : null;
-                    }),
-
-                Tables\Columns\IconColumn::make('is_active')
-                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.is_active'))
-                    ->boolean()
-                    ->sortable(),
 
                 Tables\Columns\TextColumn::make('licenses_count')
                     ->label(__('laravel-licensing-filament-manager::license-scope.fields.licenses_count'))

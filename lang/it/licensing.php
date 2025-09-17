@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'navigation_group' => 'Gestione Licenze',
+    'navigation_group' => 'Gestione licenze',
 
     'resources' => [
         'license' => [
@@ -10,62 +10,65 @@ return [
             'plural_model_label' => 'Licenze',
         ],
         'license_scope' => [
-            'navigation_label' => 'Ambiti Licenza',
-            'model_label' => 'Ambito Licenza',
-            'plural_model_label' => 'Ambiti Licenza',
+            'navigation_label' => 'Ambiti licenza',
+            'model_label' => 'Ambito licenza',
+            'plural_model_label' => 'Ambiti licenza',
         ],
         'license_usage' => [
-            'navigation_label' => 'Utilizzi Licenza',
-            'model_label' => 'Utilizzo Licenza',
-            'plural_model_label' => 'Utilizzi Licenza',
+            'navigation_label' => 'Utilizzi licenza',
+            'model_label' => 'Utilizzo licenza',
+            'plural_model_label' => 'Utilizzi licenza',
         ],
     ],
 
     'pages' => [
         'statistics' => [
             'navigation_label' => 'Statistiche',
-            'title' => 'Statistiche Licenze',
+            'title' => 'Statistiche licensing',
         ],
     ],
 
     'widgets' => [
         'stats' => [
-            'total_licenses' => 'Totale Licenze',
+            'total_licenses' => 'Totale licenze',
             'total_licenses_description' => 'Tutte le licenze nel sistema',
-            'active_licenses' => 'Licenze Attive',
+            'active_licenses' => 'Licenze attive',
             'active_licenses_description' => 'Licenze attualmente attive',
-            'total_usages' => 'Utilizzi Totali',
+            'total_usages' => 'Totale utilizzi',
             'total_usages_description' => 'Record di utilizzo licenze',
-            'license_scopes' => 'Ambiti Licenza',
-            'license_scopes_description' => 'Tipi di licenza disponibili',
+            'expiring_soon' => 'In scadenza',
+            'expiring_soon_description' => 'Licenze attive in scadenza nei prossimi 30 giorni',
+            'license_scopes' => 'Ambiti licenza',
+            'license_scopes_description' => 'Tipologie di licenza disponibili',
         ],
         'recent_usages' => [
-            'heading' => 'Utilizzi Recenti',
+            'heading' => 'Utilizzi licenza recenti',
         ],
         'expiring_licenses' => [
-            'heading' => 'Licenze in Scadenza',
+            'heading' => 'Licenze in scadenza',
             'empty_heading' => 'Nessuna licenza in scadenza',
             'empty_description' => 'Non ci sono licenze in scadenza nei prossimi 30 giorni.',
         ],
     ],
 
     'fields' => [
-        'license_key' => 'Chiave Licenza',
+        'license_key' => 'Chiave licenza',
         'key' => 'Chiave',
         'scope' => 'Ambito',
-        'scope_id' => 'Ambito Licenza',
-        'licensable_type' => 'Tipo Licenziabile',
-        'licensable_id' => 'ID Licenziabile',
+        'scope_id' => 'Ambito licenza',
+        'template' => 'Template licenza',
+        'licensable_type' => 'Tipo licenziabile',
+        'licensable_id' => 'ID licenziabile',
         'expires_at' => 'Scade il',
         'is_active' => 'Attiva',
         'created_at' => 'Creata il',
         'updated_at' => 'Aggiornata il',
-        'feature' => 'Funzionalità',
+        'feature' => 'Funzione',
         'quantity' => 'Quantità',
         'used_at' => 'Utilizzata il',
-        'days_remaining' => 'Giorni Rimanenti',
-        'device_id' => 'ID Dispositivo',
-        'device_name' => 'Nome Dispositivo',
+        'days_remaining' => 'Giorni rimanenti',
+        'device_id' => 'ID dispositivo',
+        'device_name' => 'Nome dispositivo',
         'metadata' => 'Metadati',
         'activated_at' => 'Attivata il',
         'deactivated_at' => 'Disattivata il',

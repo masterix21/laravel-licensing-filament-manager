@@ -28,6 +28,7 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
     public function register(Panel $panel): void
     {
         $panel
+            ->readOnlyRelationManagersOnResourceViewPagesByDefault(false)
             ->resources($this->getResources())
             ->pages($this->getPages())
             ->widgets($this->getWidgets());

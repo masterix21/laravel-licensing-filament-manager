@@ -8,6 +8,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Schemas\Schema;
 use Filament\Tables;
@@ -140,10 +141,12 @@ class UsagesRelationManager extends RelationManager
                     ->visible(fn (LicenseUsage $record) => $record->status === UsageStatus::Active)
                     ->requiresConfirmation()
                     ->action(function (LicenseUsage $record) {
-                        $record->update([
-                            'status' => UsageStatus::Revoked,
-                            'revoked_at' => now(),
-                        ]);
+                        $record->revoke();
+
+                        Notification::make()
+                            ->title(__('laravel-licensing-filament-manager::license-usage.notifications.revoked'))
+                            ->warning()
+                            ->send();
                     }),
 
                 Action::make('heartbeat')
@@ -168,10 +171,7 @@ class UsagesRelationManager extends RelationManager
                         ->action(function ($records) {
                             foreach ($records as $record) {
                                 if ($record->status === UsageStatus::Active) {
-                                    $record->update([
-                                        'status' => UsageStatus::Revoked,
-                                        'revoked_at' => now(),
-                                    ]);
+                                    $record->revoke();
                                 }
                             }
                         }),
