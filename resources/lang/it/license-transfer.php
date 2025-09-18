@@ -2,6 +2,6 @@
 
 return [
     'fields' => [
-        'status' => 'Status',
+        'status' => 'Stato',
     ],
 ];

@@ -288,11 +288,11 @@ class LicenseTable
                     }
 
                     // Create license with key using the built-in method
-                    $result = License::createWithKey($licenseData);
-
                     /** @var License $license */
-                    $license = $result['license'];
-                    $generatedKey = $result['key'] ?? null;
+                    $license = License::createWithKey($licenseData);
+
+                    // Get the temporarily stored key
+                    $generatedKey = $license->temporaryLicenseKey ?? null;
 
                     if ($generatedKey) {
                         Notification::make()

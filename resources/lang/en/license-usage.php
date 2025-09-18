@@ -23,11 +23,6 @@ return [
         'inactive' => 'Inactive (7+ days)',
     ],
 
-    'status' => [
-        'active' => 'Active',
-        'revoked' => 'Revoked',
-    ],
-
     'help' => [
         'usage_fingerprint' => 'Typically a hash of device or installation identifiers.',
     ],

@@ -8,7 +8,6 @@ return [
     'license_scopes' => 'License Scopes',
 
     'all_licenses_count' => 'All licenses in system',
-    'currently_active' => 'Currently active',
     'no_active_licenses' => 'No active licenses',
     'expiring_30_days' => 'Expiring in next 30 days',
     'seats_in_use' => 'Seats currently in use',

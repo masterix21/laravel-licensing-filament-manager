@@ -43,5 +43,4 @@ return [
     ],
 
     'days' => ':count days',
-    'inherits_from' => 'Inherits from :parent',
 ];

@@ -2,14 +2,14 @@
 
 return [
     'fields' => [
-        'period_start' => 'Period Start',
-        'period_end' => 'Period End',
-        'duration' => 'Duration',
-        'amount_cents' => 'Amount (cents)',
-        'amount' => 'Amount',
-        'currency' => 'Currency',
-        'notes' => 'Notes',
+        'period_start' => 'Inizio periodo',
+        'period_end' => 'Fine periodo',
+        'duration' => 'Durata',
+        'amount_cents' => 'Importo (centesimi)',
+        'amount' => 'Importo',
+        'currency' => 'Valuta',
+        'notes' => 'Note',
     ],
 
-    'days' => 'days',
+    'days' => 'giorni',
 ];

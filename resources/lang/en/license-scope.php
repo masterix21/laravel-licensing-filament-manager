@@ -7,7 +7,6 @@ return [
         'default_license_settings_description' => 'Default values for licenses created within this scope',
         'key_rotation_settings' => 'Key Rotation Settings',
         'key_rotation_settings_description' => 'Automatic signing key rotation configuration',
-        'statistics' => 'Statistics',
         'metadata' => 'Metadata',
     ],
 
@@ -29,7 +28,6 @@ return [
         'next_key_rotation_at' => 'Next Scheduled Rotation',
         'licenses_count' => 'Total Licenses',
         'active_licenses_count' => 'Active Licenses',
-        'signing_keys_count' => 'Signing Keys',
         'meta' => 'Additional Metadata',
     ],
 

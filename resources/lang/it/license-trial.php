@@ -2,8 +2,8 @@
 
 return [
     'fields' => [
-        'status' => 'Status',
-        'started_at' => 'Started At',
-        'ends_at' => 'Ends At',
+        'status' => 'Stato',
+        'started_at' => 'Iniziato il',
+        'ends_at' => 'Termina il',
     ],
 ];

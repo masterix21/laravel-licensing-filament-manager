@@ -19,18 +19,6 @@ return [
         'view' => 'View',
         'edit' => 'Edit',
         'delete' => 'Delete',
-        'create' => 'Create',
-        'save' => 'Save',
-        'cancel' => 'Cancel',
         'delete_selected' => 'Delete Selected',
-    ],
-
-    'status' => [
-        'pending' => 'Pending',
-        'active' => 'Active',
-        'inactive' => 'Inactive',
-        'expired' => 'Expired',
-        'suspended' => 'Suspended',
-        'cancelled' => 'Cancelled',
     ],
 ];

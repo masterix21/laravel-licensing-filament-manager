@@ -11,11 +11,6 @@ return [
         'revocation_reason' => 'Revocation Reason',
     ],
 
-    'status' => [
-        'active' => 'Active',
-        'revoked' => 'Revoked',
-        'expired' => 'Expired',
-    ],
 
     'actions' => [
         'generate_new' => 'Generate New Key',
