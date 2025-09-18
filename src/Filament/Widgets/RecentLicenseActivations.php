@@ -14,7 +14,7 @@ class RecentLicenseActivations extends BaseWidget
         return __('laravel-licensing-filament-manager::licensing.widgets.recent_usages.heading');
     }
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
