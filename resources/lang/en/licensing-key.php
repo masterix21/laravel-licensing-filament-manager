@@ -11,7 +11,6 @@ return [
         'revocation_reason' => 'Revocation Reason',
     ],
 
-
     'actions' => [
         'generate_new' => 'Generate New Key',
         'generate_new_modal_heading' => 'Generate New Signing Key',

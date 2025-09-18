@@ -11,7 +11,6 @@ return [
         'revocation_reason' => '撤销原因',
     ],
 
-
     'actions' => [
         'generate_new' => '生成新密钥',
         'generate_new_modal_heading' => '生成新签名密钥',

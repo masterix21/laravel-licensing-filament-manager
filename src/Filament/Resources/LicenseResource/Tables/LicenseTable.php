@@ -42,7 +42,7 @@ class LicenseTable
                 Tables\Columns\TextColumn::make('licensable')
                     ->label(__('laravel-licensing-filament-manager::license.fields.licensable'))
                     ->formatStateUsing(function (License $record) {
-                        if (!$record->licensable_type || !$record->licensable_id) {
+                        if (! $record->licensable_type || ! $record->licensable_id) {
                             return '—';
                         }
 
@@ -55,6 +55,7 @@ class LicenseTable
                                 if ($model) {
                                     $titleField = $modelConfig['title'] ?? 'name';
                                     $displayValue = data_get($model, $titleField, "#{$record->licensable_id}");
+
                                     return sprintf(
                                         '%s: %s',
                                         class_basename($record->licensable_type),
@@ -75,7 +76,7 @@ class LicenseTable
                     })
                     ->sortable(query: function ($query, string $direction) {
                         return $query->orderBy('licensable_type', $direction)
-                                     ->orderBy('licensable_id', $direction);
+                            ->orderBy('licensable_id', $direction);
                     }),
 
                 Tables\Columns\TextColumn::make('status')
@@ -236,12 +237,12 @@ class LicenseTable
 
         // Hide the scope column since we're already in a scope context
         $columns = collect($configuredTable->getColumns())
-            ->filter(fn($column) => $column->getName() !== 'scope.name')
+            ->filter(fn ($column) => $column->getName() !== 'scope.name')
             ->toArray();
 
         // Remove the license_scope_id filter since we're already filtering by scope
         $filters = collect($configuredTable->getFilters())
-            ->filter(fn($filter) => $filter->getName() !== 'license_scope_id')
+            ->filter(fn ($filter) => $filter->getName() !== 'license_scope_id')
             ->toArray();
 
         // Add custom header actions for relation manager
@@ -249,62 +250,62 @@ class LicenseTable
             ->columns($columns)
             ->filters($filters)
             ->headerActions([
-            CreateAction::make()
-                ->label(__('laravel-licensing-filament-manager::license.actions.create'))
-                ->using(function (array $data) use ($livewire) {
-                    if (! $livewire instanceof RelationManager) {
-                        throw new \RuntimeException('This method can only be used with RelationManager instances');
-                    }
-
-                    /** @var LicenseScope $scope */
-                    $scope = $livewire->getOwnerRecord();
-
-                    $templateId = $data['template_id'] ?? null;
-                    $template = $templateId ? $scope->templates()->find($templateId) : null;
-
-                    // Prepare license data
-                    $licenseData = [
-                        'license_scope_id' => $scope->id,
-                        'licensable_type' => $data['licensable_type'] ?? null,
-                        'licensable_id' => $data['licensable_id'] ?? null,
-                        'max_usages' => $data['max_usages'] ?? ($template?->max_usages ?? 1),
-                        'expires_at' => $data['expires_at'] ?? null,
-                        'meta' => $data['meta'] ?? [],
-                    ];
-
-                    // Apply template defaults if provided
-                    if ($template) {
-                        $licenseData['template_id'] = $template->id;
-                        if (!isset($data['expires_at']) && $template->validity_days) {
-                            $licenseData['expires_at'] = now()->addDays($template->validity_days);
+                CreateAction::make()
+                    ->label(__('laravel-licensing-filament-manager::license.actions.create'))
+                    ->using(function (array $data) use ($livewire) {
+                        if (! $livewire instanceof RelationManager) {
+                            throw new \RuntimeException('This method can only be used with RelationManager instances');
                         }
-                        if (!isset($data['max_usages'])) {
-                            $licenseData['max_usages'] = $template->max_usages ?? 1;
+
+                        /** @var LicenseScope $scope */
+                        $scope = $livewire->getOwnerRecord();
+
+                        $templateId = $data['template_id'] ?? null;
+                        $template = $templateId ? $scope->templates()->find($templateId) : null;
+
+                        // Prepare license data
+                        $licenseData = [
+                            'license_scope_id' => $scope->id,
+                            'licensable_type' => $data['licensable_type'] ?? null,
+                            'licensable_id' => $data['licensable_id'] ?? null,
+                            'max_usages' => $data['max_usages'] ?? ($template?->max_usages ?? 1),
+                            'expires_at' => $data['expires_at'] ?? null,
+                            'meta' => $data['meta'] ?? [],
+                        ];
+
+                        // Apply template defaults if provided
+                        if ($template) {
+                            $licenseData['template_id'] = $template->id;
+                            if (! isset($data['expires_at']) && $template->validity_days) {
+                                $licenseData['expires_at'] = now()->addDays($template->validity_days);
+                            }
+                            if (! isset($data['max_usages'])) {
+                                $licenseData['max_usages'] = $template->max_usages ?? 1;
+                            }
+                            // Merge template meta with provided meta
+                            $templateMeta = $template->meta ? $template->meta->toArray() : [];
+                            $providedMeta = $data['meta'] ?? [];
+                            $licenseData['meta'] = array_merge($templateMeta, $providedMeta);
                         }
-                        // Merge template meta with provided meta
-                        $templateMeta = $template->meta ? $template->meta->toArray() : [];
-                        $providedMeta = $data['meta'] ?? [];
-                        $licenseData['meta'] = array_merge($templateMeta, $providedMeta);
-                    }
 
-                    // Create license with key using the built-in method
-                    /** @var License $license */
-                    $license = License::createWithKey($licenseData);
+                        // Create license with key using the built-in method
+                        /** @var License $license */
+                        $license = License::createWithKey($licenseData);
 
-                    // Get the temporarily stored key
-                    $generatedKey = $license->temporaryLicenseKey ?? null;
+                        // Get the temporarily stored key
+                        $generatedKey = $license->temporaryLicenseKey ?? null;
 
-                    if ($generatedKey) {
-                        Notification::make()
-                            ->title(__('laravel-licensing-filament-manager::license.notifications.key_generated'))
-                            ->body(__('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $generatedKey]))
-                            ->success()
-                            ->persistent()
-                            ->send();
-                    }
+                        if ($generatedKey) {
+                            Notification::make()
+                                ->title(__('laravel-licensing-filament-manager::license.notifications.key_generated'))
+                                ->body(__('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $generatedKey]))
+                                ->success()
+                                ->persistent()
+                                ->send();
+                        }
 
-                    return $license->refresh();
-                }),
-        ]);
+                        return $license->refresh();
+                    }),
+            ]);
     }
 }

@@ -11,7 +11,6 @@ return [
         'revocation_reason' => 'रद्दीकरण कारण',
     ],
 
-
     'actions' => [
         'generate_new' => 'नई कुंजी जेनेरेट करें',
         'generate_new_modal_heading' => 'नई साइनिंग कुंजी जेनेरेट करें',

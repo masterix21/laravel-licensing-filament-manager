@@ -11,7 +11,6 @@ return [
         'revocation_reason' => 'Widerrufsgrund',
     ],
 
-
     'actions' => [
         'generate_new' => 'Neuen Schlüssel generieren',
         'generate_new_modal_heading' => 'Neuen Signaturschlüssel generieren',

@@ -11,7 +11,6 @@ return [
         'revocation_reason' => 'Причина отзыва',
     ],
 
-
     'actions' => [
         'generate_new' => 'Сгенерировать новый ключ',
         'generate_new_modal_heading' => 'Генерация нового ключа подписи',

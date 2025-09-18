@@ -11,7 +11,6 @@ return [
         'revocation_reason' => 'Powód unieważnienia',
     ],
 
-
     'actions' => [
         'generate_new' => 'Wygeneruj nowy klucz',
         'generate_new_modal_heading' => 'Wygeneruj nowy klucz podpisywania',

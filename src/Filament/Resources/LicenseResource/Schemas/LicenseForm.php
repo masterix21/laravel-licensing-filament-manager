@@ -41,7 +41,7 @@ class LicenseForm
 
                                 return null;
                             })
-                            ->hidden(fn($livewire) => method_exists($livewire, 'getOwnerRecord'))
+                            ->hidden(fn ($livewire) => method_exists($livewire, 'getOwnerRecord'))
                             ->createOptionForm([
                                 Forms\Components\TextInput::make('name')
                                     ->label(__('laravel-licensing-filament-manager::license-scope.fields.name'))
@@ -89,6 +89,7 @@ class LicenseForm
                             ->afterStateUpdated(function ($state, callable $set, callable $get) {
                                 if (! $state) {
                                     $set('expires_at', null);
+
                                     return;
                                 }
 
@@ -97,6 +98,7 @@ class LicenseForm
 
                                 if (! $template) {
                                     $set('expires_at', null);
+
                                     return;
                                 }
 
@@ -139,13 +141,13 @@ class LicenseForm
                                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
                                         // Only recalculate if we have a template with duration
                                         $templateId = $get('template_id');
-                                        if (!$templateId || !$state) {
+                                        if (! $templateId || ! $state) {
                                             return;
                                         }
 
                                         $templateModel = config('licensing.models.license_template');
                                         $template = $templateModel::find($templateId);
-                                        if (!$template || !$template->license_duration_days) {
+                                        if (! $template || ! $template->license_duration_days) {
                                             return;
                                         }
 
