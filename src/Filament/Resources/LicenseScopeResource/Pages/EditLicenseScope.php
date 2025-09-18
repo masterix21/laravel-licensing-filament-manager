@@ -10,6 +10,16 @@ class EditLicenseScope extends EditRecord
 {
     protected static string $resource = LicenseScopeResource::class;
 
+    public function hasCombinedRelationManagerTabsWithContent(): bool
+    {
+        return true;
+    }
+
+    public function getContentTabLabel(): ?string
+    {
+        return __('laravel-licensing-filament-manager::license-scope.form.basic_information');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

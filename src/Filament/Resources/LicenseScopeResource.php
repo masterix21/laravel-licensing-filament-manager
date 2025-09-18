@@ -52,9 +52,9 @@ class LicenseScopeResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\LicensesRelationManager::class,
-            RelationManagers\SigningKeysRelationManager::class,
             RelationManagers\TemplatesRelationManager::class,
+            RelationManagers\SigningKeysRelationManager::class,
+            RelationManagers\LicensesRelationManager::class,
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Schemas;
 
 use Filament\Forms;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
@@ -13,6 +14,7 @@ class LicenseScopeForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns()
             ->schema([
                 Section::make(__('laravel-licensing-filament-manager::license-scope.form.basic_information'))
                     ->schema([
@@ -52,59 +54,63 @@ class LicenseScopeForm
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('laravel-licensing-filament-manager::license-scope.fields.is_active'))
                             ->default(true),
-                    ])
-                    ->columns(2),
+                    ]),
 
-                Section::make(__('laravel-licensing-filament-manager::license-scope.form.default_license_settings'))
-                    ->description(__('laravel-licensing-filament-manager::license-scope.form.default_license_settings_description'))
+                Grid::make()
+                    ->columns(1)
                     ->schema([
-                        Forms\Components\TextInput::make('default_max_usages')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_max_usages'))
-                            ->numeric()
-                            ->minValue(1)
-                            ->default(1)
-                            ->required(),
+                        Section::make(__('laravel-licensing-filament-manager::license-scope.form.default_license_settings'))
+                            ->columns()
+                            ->description(__('laravel-licensing-filament-manager::license-scope.form.default_license_settings_description'))
+                            ->schema([
+                                Forms\Components\TextInput::make('default_max_usages')
+                                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_max_usages'))
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->default(1)
+                                    ->required(),
 
-                        Forms\Components\TextInput::make('default_duration_days')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_duration_days'))
-                            ->numeric()
-                            ->minValue(1)
-                            ->helperText(__('laravel-licensing-filament-manager::license-scope.fields.default_duration_days_help')),
+                                Forms\Components\TextInput::make('default_duration_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_duration_days'))
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->helperText(__('laravel-licensing-filament-manager::license-scope.fields.default_duration_days_help')),
 
-                        Forms\Components\TextInput::make('default_grace_days')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_grace_days'))
-                            ->numeric()
-                            ->minValue(0)
-                            ->default(14),
-                    ])
-                    ->columns(3),
+                                Forms\Components\TextInput::make('default_grace_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_grace_days'))
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->default(14),
+                            ]),
 
-                Section::make(__('laravel-licensing-filament-manager::license-scope.form.key_rotation_settings'))
-                    ->description(__('laravel-licensing-filament-manager::license-scope.form.key_rotation_settings_description'))
-                    ->schema([
-                        Forms\Components\TextInput::make('key_rotation_days')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.key_rotation_days'))
-                            ->numeric()
-                            ->minValue(0)
-                            ->default(90)
-                            ->helperText(__('laravel-licensing-filament-manager::license-scope.fields.key_rotation_days_help')),
+                        Section::make(__('laravel-licensing-filament-manager::license-scope.form.key_rotation_settings'))
+                            ->columns()
+                            ->description(__('laravel-licensing-filament-manager::license-scope.form.key_rotation_settings_description'))
+                            ->schema([
+                                Forms\Components\TextInput::make('key_rotation_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.key_rotation_days'))
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->default(90)
+                                    ->helperText(__('laravel-licensing-filament-manager::license-scope.fields.key_rotation_days_help')),
 
-                        Forms\Components\DateTimePicker::make('last_key_rotation_at')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.last_key_rotation_at'))
-                            ->displayFormat('d/m/Y H:i')
-                            ->disabled()
-                            ->dehydrated(false),
+                                Forms\Components\DateTimePicker::make('last_key_rotation_at')
+                                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.last_key_rotation_at'))
+                                    ->displayFormat('d/m/Y H:i')
+                                    ->disabled()
+                                    ->dehydrated(false),
 
-                        Forms\Components\DateTimePicker::make('next_key_rotation_at')
-                            ->label(__('laravel-licensing-filament-manager::license-scope.fields.next_key_rotation_at'))
-                            ->displayFormat('d/m/Y H:i')
-                            ->disabled()
-                            ->dehydrated(false),
-                    ])
-                    ->columns(3)
-                    ->hiddenOn('create'),
+                                Forms\Components\DateTimePicker::make('next_key_rotation_at')
+                                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.next_key_rotation_at'))
+                                    ->displayFormat('d/m/Y H:i')
+                                    ->disabled()
+                                    ->dehydrated(false),
+                            ])
+                            ->hiddenOn('create'),
+                    ]),
 
                 Section::make(__('laravel-licensing-filament-manager::license-scope.form.metadata'))
+                    ->columnSpan(2)
                     ->schema([
                         Forms\Components\KeyValue::make('meta')
                             ->label(__('laravel-licensing-filament-manager::license-scope.fields.meta'))

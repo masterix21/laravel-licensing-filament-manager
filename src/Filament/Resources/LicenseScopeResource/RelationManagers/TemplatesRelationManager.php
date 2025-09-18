@@ -22,32 +22,37 @@ class TemplatesRelationManager extends RelationManager
     public function form(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->schema([
                 Section::make(__('laravel-licensing-filament-manager::license-template.form.details'))
+                    ->columns(4)
                     ->schema([
                         Forms\Components\TextInput::make('name')
                             ->label(__('laravel-licensing-filament-manager::license-template.fields.name'))
                             ->required()
                             ->maxLength(255)
-                            ->live(onBlur: true),
+                            ->live(onBlur: true)
+                            ->columnSpan(2),
 
                         Forms\Components\TextInput::make('slug')
                             ->label(__('laravel-licensing-filament-manager::license-template.fields.slug'))
                             ->disabled()
                             ->dehydrated(false)
-                            ->visible(fn (?LicenseTemplate $record) => (bool) $record?->slug),
+                            ->visible(fn (?LicenseTemplate $record) => (bool) $record?->slug)
+                            ->columnSpan(2),
 
                         Forms\Components\TextInput::make('tier_level')
                             ->label(__('laravel-licensing-filament-manager::license-template.fields.tier_level'))
                             ->numeric()
                             ->minValue(1)
-                            ->required(),
+                            ->required()
+                            ->columnSpan(2),
 
                         Forms\Components\Toggle::make('is_active')
                             ->label(__('laravel-licensing-filament-manager::license-template.fields.is_active'))
-                            ->default(true),
-                    ])
-                    ->columns(2),
+                            ->default(true)
+                            ->columnSpan(2),
+                    ]),
 
                 Section::make(__('laravel-licensing-filament-manager::license-template.form.configuration'))
                     ->schema([
