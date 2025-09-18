@@ -15,7 +15,7 @@ class ExpiringLicenses extends BaseWidget
         return __('laravel-licensing-filament-manager::licensing.widgets.expiring_licenses.heading');
     }
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public function table(Table $table): Table
     {
@@ -47,8 +47,7 @@ class ExpiringLicenses extends BaseWidget
                     ->label(__('laravel-licensing-filament-manager::licensing.fields.expires_at'))
                     ->dateTime()
                     ->sortable()
-                    ->color(fn (License $record) =>
-                        optional($record->expires_at)->diffInDays(now()) <= 7 ? 'danger' : 'warning'),
+                    ->color(fn (License $record) => $record->expires_at?->diffInDays(now()) <= 7 ? 'danger' : 'warning'),
                 Tables\Columns\TextColumn::make('days_remaining')
                     ->label(__('laravel-licensing-filament-manager::licensing.fields.days_remaining'))
                     ->getStateUsing(fn (License $record) => max(0, $record->daysUntilExpiration() ?? 0))

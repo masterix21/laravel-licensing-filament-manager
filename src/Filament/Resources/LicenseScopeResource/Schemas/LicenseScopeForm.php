@@ -104,7 +104,6 @@ class LicenseScopeForm
                     ->columns(3)
                     ->hiddenOn('create'),
 
-
                 Section::make(__('laravel-licensing-filament-manager::license-scope.form.metadata'))
                     ->schema([
                         Forms\Components\KeyValue::make('meta')

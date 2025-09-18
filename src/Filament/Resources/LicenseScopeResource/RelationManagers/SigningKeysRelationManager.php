@@ -121,7 +121,7 @@ class SigningKeysRelationManager extends RelationManager
                         /** @var LicenseScope $licenseScope */
                         $licenseScope = $this->getOwnerRecord();
 
-                        $validFrom = new DateTimeImmutable();
+                        $validFrom = new DateTimeImmutable;
                         $validUntil = $validFrom->modify(sprintf('+%d days', max(1, $licenseScope->key_rotation_days ?? 30)));
 
                         $kid = $licenseScope->slug.'-'.now()->format('YmdHis');
