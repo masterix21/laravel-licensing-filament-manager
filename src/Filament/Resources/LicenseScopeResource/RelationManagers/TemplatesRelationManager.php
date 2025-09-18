@@ -8,7 +8,9 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -52,6 +54,72 @@ class TemplatesRelationManager extends RelationManager
                             ->label(__('laravel-licensing-filament-manager::license-template.fields.is_active'))
                             ->default(true)
                             ->columnSpan(2),
+
+                        Forms\Components\Select::make('parent_template_id')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.parent_template'))
+                            ->relationship(
+                                'parentTemplate',
+                                'name',
+                                modifyQueryUsing: function ($query, RelationManager $livewire, ?LicenseTemplate $record) {
+                                    $query->where('license_scope_id', $livewire->getOwnerRecord()->getKey());
+
+                                    if ($record && $record->exists) {
+                                        $query->where('id', '!=', $record->getKey());
+                                    }
+
+                                    return $query;
+                                }
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->columnSpan(4),
+                    ]),
+
+                Section::make(__('laravel-licensing-filament-manager::license-template.form.durations'))
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('license_duration_days')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.license_duration_days'))
+                            ->numeric()
+                            ->minValue(1)
+                            ->nullable()
+                            ->helperText(__('laravel-licensing-filament-manager::license-template.help.license_duration_days')),
+
+                        Grid::make()
+                            ->columns(1)
+                            ->schema([
+                                Forms\Components\Toggle::make('supports_trial')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.supports_trial'))
+                                    ->default(false)
+                                    ->reactive(),
+
+                                Forms\Components\TextInput::make('trial_duration_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.trial_duration_days'))
+                                    ->hiddenLabel()
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->visible(fn (Get $get) => $get('supports_trial'))
+                                    ->required(fn (Get $get) => $get('supports_trial'))
+                                    ->helperText(__('laravel-licensing-filament-manager::license-template.help.trial_duration_days')),
+                            ]),
+
+                        Grid::make()
+                            ->columns(1)
+                            ->schema([
+                                Forms\Components\Toggle::make('has_grace_period')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.has_grace_period'))
+                                    ->default(false)
+                                    ->reactive(),
+
+                                Forms\Components\TextInput::make('grace_period_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.grace_period_days'))
+                                    ->hiddenLabel()
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->visible(fn (Get $get) => $get('has_grace_period'))
+                                    ->required(fn (Get $get) => $get('has_grace_period'))
+                                    ->helperText(__('laravel-licensing-filament-manager::license-template.help.grace_period_days')),
+                            ]),
                     ]),
 
                 Section::make(__('laravel-licensing-filament-manager::license-template.form.configuration'))
@@ -106,15 +174,30 @@ class TemplatesRelationManager extends RelationManager
                     ->label(__('laravel-licensing-filament-manager::license-template.fields.name'))
                     ->searchable()
                     ->sortable()
-                    ->weight('bold'),
+                    ->weight('bold')
+                    ->description(fn ($record) => $record->parentTemplate?->name)
+                    ->icon(fn ($record) => $record->parent_template_id ? 'heroicon-m-link' : null)
+                    ->iconPosition('before'),
 
                 Tables\Columns\TextColumn::make('tier_level')
                     ->label(__('laravel-licensing-filament-manager::license-template.fields.tier_level'))
-                    ->sortable(),
+                    ->sortable()
+                    ->badge()
+                    ->color('primary'),
 
                 Tables\Columns\IconColumn::make('is_active')
                     ->label(__('laravel-licensing-filament-manager::license-template.fields.is_active'))
                     ->boolean(),
+
+                Tables\Columns\IconColumn::make('supports_trial')
+                    ->label(__('laravel-licensing-filament-manager::license-template.fields.supports_trial'))
+                    ->boolean()
+                    ->toggleable(),
+
+                Tables\Columns\TextColumn::make('license_duration_days')
+                    ->label(__('laravel-licensing-filament-manager::license-template.fields.license_duration_days'))
+                    ->formatStateUsing(fn ($state) => $state ? __('laravel-licensing-filament-manager::license-template.days', ['count' => $state]) : '∞')
+                    ->toggleable(),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('laravel-licensing-filament-manager::common.created_at'))

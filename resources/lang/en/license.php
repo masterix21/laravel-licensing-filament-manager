@@ -19,7 +19,7 @@ return [
         'licensable_id' => 'Licensed ID',
         'template' => 'License Template',
         'max_usages' => 'Max Usages',
-        'usages' => 'Current Usages',
+        'usages' => 'Usages',
         'remaining_usages' => 'Remaining Usages',
         'usage_percentage' => 'Usage %',
         'duration_days' => 'Duration (Days)',
