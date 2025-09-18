@@ -5,17 +5,19 @@
 [![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/lucalongo/laravel-licensing-filament-manager/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/lucalongo/laravel-licensing-filament-manager/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/lucalongo/laravel-licensing-filament-manager.svg?style=flat-square)](https://packagist.org/packages/lucalongo/laravel-licensing-filament-manager)
 
-A complete Filament 4.x panel integration for the [masterix21/laravel-licensing](https://github.com/masterix21/laravel-licensing) package. This package provides a beautiful and intuitive admin interface to manage software licenses, license scopes, activations, and view comprehensive licensing statistics directly within your Filament panel.
+A complete Filament 4.x panel integration for the [masterix21/laravel-licensing](https://github.com/masterix21/laravel-licensing) package. This package provides a beautiful and intuitive admin interface to manage software licenses, license scopes, templates, usage tracking, and comprehensive licensing statistics directly within your Filament panel.
 
 ## Features
 
-- 📊 **Complete License Management**: Create, edit, and manage software licenses
-- 🔐 **License Scope Control**: Define and manage different license scopes with specific constraints
-- ✅ **Activation Tracking**: Monitor and manage license activations across devices
-- 📈 **Statistics Dashboard**: View comprehensive licensing analytics and metrics
+- 📊 **Complete License Management**: Create, edit, and manage software licenses with full lifecycle control
+- 🔐 **License Scope Management**: Define and manage different license scopes with automatic key rotation
+- 📋 **Template System**: Create reusable license templates with predefined configurations
+- 📱 **Usage Tracking**: Monitor and manage license usage across devices with fingerprinting
+- 🔑 **Signing Key Management**: Automatic and manual key rotation with revocation support
+- 📈 **Statistics Dashboard**: View comprehensive licensing analytics with customizable widgets
 - 🎨 **Native Filament 4 Integration**: Seamlessly integrates with your existing Filament panel
-- 🌍 **Multi-language Support**: Full translation support for internationalization
-- 🔧 **Customizable**: Easily extend and customize to fit your needs
+- 🌍 **Multi-language Support**: Available in 9 languages (English, Italian, Spanish, German, French, Russian, Chinese, Hindi, Polish)
+- 🔧 **Highly Customizable**: Flexible configuration for licensable entities and custom validation
 
 ## Requirements
 
@@ -79,90 +81,201 @@ public function panel(Panel $panel): Panel
 }
 ```
 
+### Configuring Licensable Entities
+
+The package allows you to configure which models in your application can have licenses attached to them. This is done through the `licensed_entities` configuration in the published config file:
+
+```php
+// config/licensing-filament-manager.php
+
+return [
+    'licensed_entities' => [
+        // Map your model classes to their configuration
+        \App\Models\User::class => [
+            'title' => 'name', // The field to display as the entity's title
+            'search' => ['name', 'email'], // Fields to search when selecting entities
+        ],
+        \App\Models\Team::class => [
+            'title' => 'name',
+            'search' => ['name', 'slug'],
+        ],
+        \App\Models\Organization::class => [
+            'title' => 'company_name',
+            'search' => ['company_name', 'tax_id'],
+        ],
+        // Add more models as needed
+    ],
+];
+```
+
+When creating or editing licenses, you'll be able to select which type of entity the license is for, and then search and select the specific entity. The license table will display the entity with its configured title field.
+
 ## Usage
 
 Once installed and configured, the package adds the following sections to your Filament panel:
 
 ### License Scopes Resource
 
-Manage different types of licenses with specific constraints:
+Manage different license scopes with automatic key rotation and default configurations:
 
-- **Create License Scopes**: Define new license types (e.g., Basic, Professional, Enterprise)
-- **Set Constraints**: Configure activation limits, expiration policies, and feature flags
-- **Validation Rules**: Define custom validation for each license scope
+- **Scope Management**: Create and manage license scopes with unique identifiers
+- **Key Rotation**: Configure automatic signing key rotation intervals
+- **Default Settings**: Set default max usages, duration, and grace periods
+- **Templates**: Associate reusable templates with scopes
+- **Metadata**: Store additional configuration data
 
 Navigate to `/admin/license-scopes` in your Filament panel.
 
 ### Licenses Resource
 
-Manage individual software licenses:
+Complete license lifecycle management:
 
-- **Issue Licenses**: Create new licenses for customers
-- **License Keys**: Generate and manage unique license keys
-- **Expiration Management**: Set and track license expiration dates
-- **Status Control**: Activate, deactivate, or revoke licenses
-- **Customer Association**: Link licenses to specific users or customers
+- **License Creation**: Issue new licenses with automatic key generation
+- **Entity Association**: Link licenses to users, teams, or custom entities
+- **Template Application**: Apply predefined templates for consistent licensing
+- **Status Management**: Track pending, active, expired, suspended states
+- **Usage Monitoring**: Real-time usage tracking and remaining usage calculation
+- **Key Management**: Secure key generation with optional retrieval
+- **Bulk Operations**: Perform bulk actions on multiple licenses
 
 Navigate to `/admin/licenses` in your Filament panel.
 
-### License Activations Resource
+### License Templates
 
-Track and manage where licenses are being used:
+Create reusable license configurations:
 
-- **Device Tracking**: Monitor which devices have activated licenses
-- **Activation History**: View complete activation timeline
-- **Remote Deactivation**: Deactivate licenses from specific devices
-- **Hardware Fingerprinting**: Track unique device identifiers
+- **Template Hierarchy**: Create parent and child templates with inheritance
+- **Feature Configuration**: Define features and entitlements
+- **Trial Support**: Configure trial periods and grace periods
+- **Base Configuration**: Set default values for licenses created from templates
+- **Tier Levels**: Organize templates by tier for different product levels
 
-Navigate to `/admin/license-activations` in your Filament panel.
+### License Usage Resource
+
+Track and manage license usage across devices:
+
+- **Usage Fingerprinting**: Track unique device/installation identifiers
+- **Real-time Monitoring**: See last seen timestamps and activity status
+- **Client Information**: Track IP addresses, user agents, and client types
+- **Revocation**: Revoke specific usage instances
+- **Heartbeat Tracking**: Monitor active connections with heartbeat updates
+- **Bulk Management**: Revoke multiple usages at once
+
+Navigate to `/admin/license-usages` in your Filament panel.
 
 ### Statistics Dashboard
 
-View comprehensive licensing analytics:
+Comprehensive licensing analytics with widgets:
 
-- **Active Licenses**: Total number of active licenses
-- **Activation Trends**: Graphs showing activation patterns over time
-- **Revenue Metrics**: Track licensing revenue (if integrated with billing)
-- **Usage Statistics**: See which license types are most popular
-- **Expiration Forecasting**: View upcoming license expirations
+- **License Overview**: Total licenses, active licenses, expiring soon
+- **Usage Metrics**: Active usage count and seat utilization
+- **Scope Statistics**: Number of active license scopes
+- **Expiring Licenses**: List of licenses expiring within 30 days
+- **Recent Activations**: Latest license activations and usage
 
-Navigate to `/admin/licensing-statistics` in your Filament panel.
+Navigate to the dashboard widgets in your Filament panel.
 
 ## Basic Examples
 
-### Creating a License Scope
+### Creating a License Scope with Key Rotation
 
 ```php
 use Masterix21\LaravelLicensing\Models\LicenseScope;
 
 $scope = LicenseScope::create([
-    'name' => 'Professional',
-    'max_activations' => 3,
-    'expires_in_days' => 365,
-    'features' => ['advanced_reports', 'priority_support'],
+    'name' => 'Enterprise',
+    'slug' => 'enterprise',
+    'identifier' => 'com.yourcompany.enterprise',
+    'description' => 'Enterprise license with advanced features',
+    'is_active' => true,
+    'default_max_usages' => 10,
+    'default_duration_days' => 365,
+    'default_grace_days' => 30,
+    'key_rotation_days' => 90, // Rotate keys every 90 days
+    'meta' => [
+        'features' => ['api_access', 'priority_support', 'white_label'],
+        'rate_limits' => ['api_calls' => 10000],
+    ],
 ]);
 ```
 
-### Issuing a License
+### Creating a License Template
+
+```php
+use Masterix21\LaravelLicensing\Models\LicenseTemplate;
+
+$template = LicenseTemplate::create([
+    'license_scope_id' => $scope->id,
+    'name' => 'Enterprise Annual',
+    'slug' => 'enterprise-annual',
+    'tier_level' => 3,
+    'is_active' => true,
+    'license_duration_days' => 365,
+    'supports_trial' => true,
+    'trial_duration_days' => 30,
+    'has_grace_period' => true,
+    'grace_period_days' => 15,
+    'base_configuration' => [
+        'max_usages' => 10,
+    ],
+    'features' => [
+        'api_access' => true,
+        'white_label' => true,
+        'custom_branding' => true,
+    ],
+    'entitlements' => [
+        'api_calls_per_month' => 100000,
+        'storage_gb' => 500,
+        'team_members' => 50,
+    ],
+]);
+```
+
+### Issuing a License with Template
 
 ```php
 use Masterix21\LaravelLicensing\Models\License;
 
-$license = License::create([
-    'scope_id' => $scope->id,
-    'user_id' => $user->id,
-    'key' => License::generateKey(),
+// Create license with automatic key generation
+$license = License::createWithKey([
+    'license_scope_id' => $scope->id,
+    'template_id' => $template->id,
+    'licensable_type' => \App\Models\Organization::class,
+    'licensable_id' => $organization->id,
+    'max_usages' => 10,
     'expires_at' => now()->addYear(),
+    'meta' => [
+        'customer_name' => $organization->name,
+        'invoice_number' => 'INV-2024-001',
+    ],
 ]);
+
+// The license key is temporarily available via:
+$licenseKey = $license->temporaryLicenseKey;
 ```
 
-### Checking License Status
+### Tracking License Usage
 
 ```php
-// In your application
-if ($user->hasActiveLicense('professional')) {
-    // Enable professional features
-}
+use Masterix21\LaravelLicensing\Models\LicenseUsage;
+
+// Record a new usage
+$usage = LicenseUsage::create([
+    'license_id' => $license->id,
+    'usage_fingerprint' => hash('sha256', $deviceId . $machineId),
+    'client_type' => 'desktop',
+    'name' => 'John\'s MacBook Pro',
+    'ip' => $request->ip(),
+    'user_agent' => $request->userAgent(),
+    'registered_at' => now(),
+    'last_seen_at' => now(),
+]);
+
+// Update heartbeat
+$usage->update(['last_seen_at' => now()]);
+
+// Check if usage is active (seen in last 7 days)
+$isActive = $usage->last_seen_at->diffInDays(now()) < 7;
 ```
 
 ## Customization
@@ -230,21 +343,119 @@ class CustomRevenueWidget extends LicenseStatsWidget
 
 ## API Integration
 
-The package works seamlessly with the laravel-licensing API endpoints:
+The package works seamlessly with the laravel-licensing API endpoints for license validation and usage tracking:
 
 ```php
-// Your API endpoint for license validation
+// License validation endpoint
 Route::post('/api/license/validate', function (Request $request) {
-    $license = License::where('key', $request->key)->firstOrFail();
+    $license = License::where('key_hash', hash('sha256', $request->key))->firstOrFail();
 
-    if ($license->canActivate($request->device_id)) {
-        $activation = $license->activate($request->device_id);
-        return response()->json(['activated' => true, 'activation_id' => $activation->id]);
+    // Check if license is valid and active
+    if ($license->status !== LicenseStatus::Active) {
+        return response()->json(['valid' => false, 'reason' => 'License is not active']);
     }
 
-    return response()->json(['activated' => false, 'reason' => 'Max activations reached']);
+    if ($license->isExpired()) {
+        return response()->json(['valid' => false, 'reason' => 'License has expired']);
+    }
+
+    // Check usage limits
+    $currentUsages = $license->usages()->where('revoked_at', null)->count();
+    if ($currentUsages >= $license->max_usages) {
+        return response()->json(['valid' => false, 'reason' => 'Maximum usage limit reached']);
+    }
+
+    // Create or update usage
+    $fingerprint = hash('sha256', $request->device_id . $request->machine_id);
+    $usage = $license->usages()->updateOrCreate(
+        ['usage_fingerprint' => $fingerprint],
+        [
+            'client_type' => $request->client_type ?? 'unknown',
+            'name' => $request->device_name,
+            'ip' => $request->ip(),
+            'user_agent' => $request->userAgent(),
+            'last_seen_at' => now(),
+        ]
+    );
+
+    return response()->json([
+        'valid' => true,
+        'usage_id' => $usage->id,
+        'features' => $license->template?->features ?? [],
+        'entitlements' => $license->template?->entitlements ?? [],
+        'expires_at' => $license->expires_at,
+    ]);
+});
+
+// Heartbeat endpoint to keep usage active
+Route::post('/api/license/heartbeat', function (Request $request) {
+    $usage = LicenseUsage::where('id', $request->usage_id)
+        ->where('usage_fingerprint', $request->fingerprint)
+        ->firstOrFail();
+
+    $usage->update(['last_seen_at' => now()]);
+
+    return response()->json(['success' => true]);
 });
 ```
+
+## Available Components
+
+The package provides several reusable components and traits:
+
+### Resources
+- `LicenseResource` - Complete license management interface
+- `LicenseScopeResource` - License scope administration
+- `LicenseUsageResource` - Usage tracking and management
+- `LicenseTemplateResource` - Template management (relation manager)
+
+### Relation Managers
+- `LicensesRelationManager` - Manage licenses within scope context
+- `SigningKeysRelationManager` - Handle signing keys for scopes
+- `TemplatesRelationManager` - Manage templates for scopes
+- `UsagesRelationManager` - Track usages for specific licenses
+- `TrialsRelationManager` - Manage trial periods for licenses
+
+### Widgets
+- `LicenseStatsOverview` - Overview statistics cards
+- `ExpiringLicenses` - Table of licenses expiring soon
+- `RecentLicenseActivations` - Latest activation activity
+- `LicenseStatsWidget` - Customizable statistics widget
+
+### Form Schemas
+- `LicenseForm` - Reusable license form configuration
+- `LicenseScopeForm` - Scope form with sections
+- `LicenseUsageForm` - Usage form fields
+- `LicenseTemplateForm` - Template configuration form
+
+### Table Configurations
+- `LicenseTable` - Comprehensive license table with filters
+- `LicenseScopeTable` - Scope table with bulk actions
+- `LicenseUsageTable` - Usage tracking table
+
+## Internationalization
+
+The package includes complete translations for 9 languages:
+
+- 🇬🇧 **English** (en)
+- 🇮🇹 **Italian** (it)
+- 🇪🇸 **Spanish** (es)
+- 🇩🇪 **German** (de)
+- 🇫🇷 **French** (fr)
+- 🇷🇺 **Russian** (ru)
+- 🇨🇳 **Chinese Simplified** (zh)
+- 🇮🇳 **Hindi** (hi)
+- 🇵🇱 **Polish** (pl)
+
+### Publishing Translations
+
+To customize translations, publish the language files:
+
+```bash
+php artisan vendor:publish --tag="laravel-licensing-filament-manager-translations"
+```
+
+Translation files will be published to `resources/lang/vendor/laravel-licensing-filament-manager/`.
 
 ## Testing
 
