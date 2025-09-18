@@ -23,7 +23,7 @@ return [
 
     'pages' => [
         'statistics' => [
-            'navigation_label' => 'Statistics',
+            'navigation_label' => 'Licensing Statistics',
             'title' => 'Licensing Statistics',
         ],
     ],

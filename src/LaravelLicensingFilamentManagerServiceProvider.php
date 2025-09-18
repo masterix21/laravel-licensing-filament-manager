@@ -19,7 +19,8 @@ class LaravelLicensingFilamentManagerServiceProvider extends PackageServiceProvi
         $package
             ->name(static::$name)
             ->hasConfigFile('licensing-filament-manager')
-            ->hasTranslations();
+            ->hasTranslations()
+            ->hasViews();
     }
 
     public function packageBooted(): void

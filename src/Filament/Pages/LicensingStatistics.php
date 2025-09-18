@@ -9,7 +9,7 @@ class LicensingStatistics extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
-    protected string $view = 'laravel-licensing-filament-manager::pages.licensing-statistics';
+    protected string $view = 'licensing-filament-manager::pages.licensing-statistics';
 
     public static function getNavigationLabel(): string
     {
