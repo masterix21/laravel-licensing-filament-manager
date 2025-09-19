@@ -59,26 +59,6 @@ class TestCase extends Orchestra
 
         config()->set('app.key', 'base64:'.base64_encode('32characterrandomstringxxxxxxxx'));
 
-        // Run all licensing migrations
-        $migrationFiles = [
-            'create_license_scopes_table.php.stub',
-            'create_licensing_keys_table.php.stub',
-            'create_license_templates_table.php.stub',
-            'create_licenses_table.php.stub',
-            'create_license_usages_table.php.stub',
-            'create_license_trials_table.php.stub',
-            'create_license_renewals_table.php.stub',
-            'create_license_transfers_table.php.stub',
-            'create_license_transfer_histories_table.php.stub',
-            'create_license_transfer_approvals_table.php.stub',
-            'create_licensing_audit_logs_table.php.stub',
-        ];
-
-        foreach ($migrationFiles as $file) {
-            $migration = include __DIR__.'/../vendor/masterix21/laravel-licensing/database/migrations/'.$file;
-            $migration->up();
-        }
-
         // Create test users table
         $app['db']->connection()->getSchemaBuilder()->create('users', function ($table) {
             $table->id();
