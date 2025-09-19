@@ -15,4 +15,3 @@ it('license resource exists', function () {
 it('license usage resource exists', function () {
     expect(class_exists(LicenseUsageResource::class))->toBeTrue();
 });
-

@@ -2,7 +2,6 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
-use Illuminate\Database\Eloquent\Model;
 
 uses(RefreshDatabase::class);
 
@@ -24,7 +23,7 @@ beforeEach(function () {
     });
 
     // Define test models
-    if (!class_exists('TestUserModel')) {
+    if (! class_exists('TestUserModel')) {
         eval('
             class TestUserModel extends \Illuminate\Database\Eloquent\Model {
                 protected $table = "test_users";
@@ -34,7 +33,7 @@ beforeEach(function () {
         ');
     }
 
-    if (!class_exists('TestProductModel')) {
+    if (! class_exists('TestProductModel')) {
         eval('
             class TestProductModel extends \Illuminate\Database\Eloquent\Model {
                 protected $table = "test_products";

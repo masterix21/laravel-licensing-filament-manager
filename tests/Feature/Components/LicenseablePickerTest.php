@@ -1,7 +1,7 @@
 <?php
 
-use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
 use Filament\Forms\Components\MorphToSelect;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
 
 it('extends MorphToSelect component', function () {
     $component = LicenseablePicker::make('licenseable');
