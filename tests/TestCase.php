@@ -29,6 +29,16 @@ class TestCase extends Orchestra
         );
     }
 
+    protected function tearDown(): void
+    {
+        if (class_exists(\Illuminate\Foundation\Bootstrap\HandleExceptions::class)) {
+            // Flush Laravel's exception handlers with this test instance so PHPUnit 12 receives a TestCase context.
+            \Illuminate\Foundation\Bootstrap\HandleExceptions::flushState($this);
+        }
+
+        parent::tearDown();
+    }
+
     protected function getPackageProviders($app)
     {
         return [
