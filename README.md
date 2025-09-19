@@ -1,11 +1,22 @@
 # Laravel Licensing Filament Manager
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/lucalongo/laravel-licensing-filament-manager.svg?style=flat-square)](https://packagist.org/packages/lucalongo/laravel-licensing-filament-manager)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/lucalongo/laravel-licensing-filament-manager/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/lucalongo/laravel-licensing-filament-manager/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/lucalongo/laravel-licensing-filament-manager/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/lucalongo/laravel-licensing-filament-manager/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/lucalongo/laravel-licensing-filament-manager.svg?style=flat-square)](https://packagist.org/packages/lucalongo/laravel-licensing-filament-manager)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/masterix21/laravel-licensing-filament-manager.svg?style=flat-square)](https://packagist.org/packages/masterix21/laravel-licensing-filament-manager)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/masterix21/laravel-licensing-filament-manager/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/masterix21/laravel-licensing-filament-manager/actions?query=workflow%3Arun-tests+branch%3Amain)
+[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/masterix21/laravel-licensing-filament-manager/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/masterix21/laravel-licensing-filament-manager/actions?query=workflow%3A"Fix+PHP+code+style+issues"+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/masterix21/laravel-licensing-filament-manager.svg?style=flat-square)](https://packagist.org/packages/masterix21/laravel-licensing-filament-manager)
 
 A complete Filament 4.x panel integration for the [masterix21/laravel-licensing](https://github.com/masterix21/laravel-licensing) package. This package provides a beautiful and intuitive admin interface to manage software licenses, license scopes, templates, usage tracking, and comprehensive licensing statistics directly within your Filament panel.
+
+## Related Packages
+
+- **Main Package**: [masterix21/laravel-licensing](https://github.com/masterix21/laravel-licensing) - The core Laravel licensing system that provides the foundation for license management
+- **Client Package**: [masterix21/laravel-licensing-client](https://github.com/masterix21/laravel-licensing-client) - Client library for integrating license validation in your applications
+
+## Support This Project
+
+If you find this package useful, please consider sponsoring me to support continued development and maintenance:
+
+[![Sponsor on GitHub](https://img.shields.io/badge/Sponsor-GitHub%20Sponsors-ea4aaa?style=for-the-badge&logo=github)](https://github.com/sponsors/masterix21)
 
 ## Features
 
@@ -31,7 +42,7 @@ A complete Filament 4.x panel integration for the [masterix21/laravel-licensing]
 Install the package via composer:
 
 ```bash
-composer require lucalongo/laravel-licensing-filament-manager
+composer require masterix21/laravel-licensing-filament-manager
 ```
 
 The package will automatically register its service provider.
