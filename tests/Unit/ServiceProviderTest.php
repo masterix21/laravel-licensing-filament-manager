@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\File;
 use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerServiceProvider;
 
 it('registers the service provider', function () {

@@ -1,11 +1,11 @@
 <?php
 
-use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
 use Illuminate\Database\Eloquent\Model;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
 
 beforeEach(function () {
     // Create test model classes dynamically
-    if (!class_exists('TestUser')) {
+    if (! class_exists('TestUser')) {
         eval('
             class TestUser extends \Illuminate\Database\Eloquent\Model {
                 protected $table = "users";
@@ -14,7 +14,7 @@ beforeEach(function () {
         ');
     }
 
-    if (!class_exists('TestProduct')) {
+    if (! class_exists('TestProduct')) {
         eval('
             class TestProduct extends \Illuminate\Database\Eloquent\Model {
                 protected $table = "products";
