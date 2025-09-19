@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Eloquent\Model;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
 
 beforeEach(function () {
