@@ -17,7 +17,7 @@
     ],
     "require": {
         "php": "^8.3|^8.4",
-        "filament/filament": "^4.0",
+        "filament/filament": "^5.2",
         "illuminate/contracts": "^11.0||^12.0",
         "masterix21/laravel-licensing": "@dev",
         "spatie/laravel-package-tools": "^1.16"
