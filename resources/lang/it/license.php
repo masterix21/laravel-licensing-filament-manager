@@ -15,8 +15,6 @@ return [
         'status' => 'Stato',
         'license_scope' => 'Ambito licenza',
         'licensable' => 'Entità licenziata',
-        'licensable_type' => 'Tipo entità',
-        'licensable_id' => 'ID entità',
         'template' => 'Template licenza',
         'max_usages' => 'Utilizzi massimi',
         'usages' => 'Utilizzi correnti',
@@ -34,7 +32,6 @@ return [
         'activate' => 'Attiva',
         'suspend' => 'Sospendi',
         'renew' => 'Rinnova',
-        'transfer' => 'Trasferisci',
         'show_key' => 'Mostra chiave licenza',
         'regenerate_key' => 'Rigenera chiave licenza',
     ],
@@ -61,6 +58,15 @@ return [
         'key_regenerated' => 'Chiave licenza rigenerata.',
         'key_unavailable' => 'La chiave non può essere recuperata perché il recupero è disabilitato.',
         'key_value' => 'Chiave licenza: :key',
+    ],
+
+    'statuses' => [
+        'pending' => 'In attesa',
+        'active' => 'Attiva',
+        'grace' => 'Periodo di grazia',
+        'expired' => 'Scaduta',
+        'suspended' => 'Sospesa',
+        'cancelled' => 'Annullata',
     ],
 
     'relations' => [

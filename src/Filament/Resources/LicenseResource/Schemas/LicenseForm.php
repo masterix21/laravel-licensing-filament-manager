@@ -11,6 +11,7 @@ use Filament\Schemas\Schema;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Forms\Components\LicenseablePicker;
 use LucaLongo\Licensing\Enums\LicenseStatus;
 use LucaLongo\Licensing\Models\License;
+use LucaLongo\Licensing\Services\EncryptedLicenseKeyRetriever;
 
 class LicenseForm
 {
@@ -179,9 +180,34 @@ class LicenseForm
 
                         Section::make(__('laravel-licensing-filament-manager::license.form.security'))
                             ->schema([
+                                TextEntry::make('license_key_display')
+                                    ->label(__('laravel-licensing-filament-manager::license.fields.key_visibility'))
+                                    ->state(function (?License $record) {
+                                        if (! $record) {
+                                            return null;
+                                        }
+
+                                        $retriever = app(EncryptedLicenseKeyRetriever::class);
+
+                                        if (! $retriever->isAvailable()) {
+                                            return __('laravel-licensing-filament-manager::license.security.key_not_retrievable');
+                                        }
+
+                                        $key = $retriever->retrieve($record);
+
+                                        if (! $key) {
+                                            return __('laravel-licensing-filament-manager::license.security.key_not_yet_generated');
+                                        }
+
+                                        return $key;
+                                    })
+                                    ->copyable()
+                                    ->fontFamily('mono'),
+
                                 TextEntry::make('key_hash_display')
                                     ->label(__('laravel-licensing-filament-manager::license.fields.key_hash'))
-                                    ->state(fn (?License $record) => $record?->key_hash),
+                                    ->state(fn (?License $record) => $record?->key_hash)
+                                    ->fontFamily('mono'),
                             ])
                             ->columns(1)
                             ->hidden(fn (?License $record) => $record === null),

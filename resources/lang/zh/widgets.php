@@ -12,4 +12,5 @@ return [
     'expiring_30_days' => '在未来30天内过期',
     'seats_in_use' => '当前正在使用的席位',
     'active_templates' => '活跃的许可证模板',
+    'currently_active' => '当前活跃',
 ];

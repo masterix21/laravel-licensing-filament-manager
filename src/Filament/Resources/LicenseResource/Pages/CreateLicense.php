@@ -5,7 +5,7 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseRe
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Crypt;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
 
 class CreateLicense extends CreateRecord
@@ -16,7 +16,7 @@ class CreateLicense extends CreateRecord
 
     protected function getRedirectUrl(): string
     {
-        return $this->getResource()::getUrl('index');
+        return $this->getResource()::getUrl('view', ['record' => $this->record]);
     }
 
     protected function getCreatedNotificationTitle(): ?string
@@ -29,17 +29,19 @@ class CreateLicense extends CreateRecord
         $licenseModel = config('licensing.models.license');
         $templateModel = config('licensing.models.license_template');
 
-        $this->generatedKey = Str::uuid()->toString();
+        $this->generatedKey = $licenseModel::generateKey();
         $data['key_hash'] = $licenseModel::hashKey($this->generatedKey);
+
+        if (config('licensing.key_management.retrieval_enabled', true)) {
+            $data['meta'] = array_merge($data['meta'] ?? [], [
+                'encrypted_key' => Crypt::encryptString($this->generatedKey),
+            ]);
+        }
 
         $templateId = $data['template_id'] ?? null;
 
-        if ($templateId) {
-            $template = $templateModel::find($templateId);
-
-            if ($template) {
-                return $licenseModel::createFromTemplate($template, $data);
-            }
+        if ($templateId && $template = $templateModel::find($templateId)) {
+            return $licenseModel::createFromTemplate($template, $data);
         }
 
         return $licenseModel::create($data);

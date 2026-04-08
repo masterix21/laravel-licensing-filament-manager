@@ -12,4 +12,5 @@ return [
     'expiring_30_days' => 'Läuft in den nächsten 30 Tagen ab',
     'seats_in_use' => 'Derzeit verwendete Plätze',
     'active_templates' => 'Aktive Lizenzvorlagen',
+    'currently_active' => 'Derzeit aktiv',
 ];

@@ -12,4 +12,5 @@ return [
     'expiring_30_days' => 'Wygasające w ciągu 30 dni',
     'seats_in_use' => 'Obecnie używane miejsca',
     'active_templates' => 'Aktywne szablony licencji',
+    'currently_active' => 'Obecnie aktywne',
 ];
