@@ -53,7 +53,6 @@ class LicenseScopeTable
                     ->badge()
                     ->color('success'),
 
-
                 Tables\Columns\TextColumn::make('key_rotation_days')
                     ->label(__('laravel-licensing-filament-manager::license-scope.fields.key_rotation_days'))
                     ->sortable()
