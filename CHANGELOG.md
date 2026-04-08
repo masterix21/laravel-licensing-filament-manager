@@ -2,6 +2,18 @@
 
 All notable changes to `laravel-licensing-filament-manager` will be documented in this file.
 
+## 1.2.1 - 2026-04-08
+
+### Features
+
+- Add Filament 5 support and fix deprecated API calls
+
+### Fixes
+
+- Fix all PHPStan errors across the codebase
+
+**Full Changelog**: https://github.com/masterix21/laravel-licensing-filament-manager/compare/1.2.0...1.2.1
+
 ## 1.2.0 - 2026-04-08
 
 ### Features
