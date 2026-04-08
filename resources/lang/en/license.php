@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'The license key will be generated after saving.',
         'key_retrievable' => 'Encrypted key retrieval is enabled.',
         'key_not_retrievable' => 'Key retrieval is disabled in the licensing configuration.',
+        'key_not_stored' => 'The key is not stored for this license. Only available for newly created licenses.',
     ],
 ];

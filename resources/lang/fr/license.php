@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'La clé de licence sera générée après sauvegarde.',
         'key_retrievable' => 'La récupération de clé chiffrée est activée.',
         'key_not_retrievable' => 'La récupération de clé est désactivée dans la configuration de licence.',
+        'key_not_stored' => 'La clé n\'est pas stockée pour cette licence. Disponible uniquement pour les nouvelles licences.',
     ],
 ];

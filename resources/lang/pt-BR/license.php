@@ -73,5 +73,6 @@ return [
         'key_not_yet_generated' => 'A chave de licença será gerada após salvar.',
         'key_retrievable' => 'A recuperação de chave criptografada está habilitada.',
         'key_not_retrievable' => 'A recuperação de chave está desativada na configuração de licenciamento.',
+        'key_not_stored' => 'A chave não está armazenada para esta licença. Disponível apenas para novas licenças.',
     ],
 ];

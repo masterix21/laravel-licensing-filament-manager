@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'De licentiesleutel wordt na het opslaan gegenereerd.',
         'key_retrievable' => 'Versleutelde sleutel ophalen is ingeschakeld.',
         'key_not_retrievable' => 'Sleutel ophalen is uitgeschakeld in de licentieconfiguratie.',
+        'key_not_stored' => 'De sleutel is niet opgeslagen voor deze licentie. Alleen beschikbaar voor nieuwe licenties.',
     ],
 ];

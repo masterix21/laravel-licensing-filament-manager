@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'La clave de licencia será generada después de guardar.',
         'key_retrievable' => 'La recuperación de clave cifrada está habilitada.',
         'key_not_retrievable' => 'La recuperación de clave está deshabilitada en la configuración de licencias.',
+        'key_not_stored' => 'La clave no está almacenada para esta licencia. Solo disponible para licencias nuevas.',
     ],
 ];

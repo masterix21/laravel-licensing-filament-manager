@@ -73,5 +73,6 @@ return [
         'key_not_yet_generated' => 'ライセンスキーは保存後に生成されます。',
         'key_retrievable' => '暗号化キーの取得が有効です。',
         'key_not_retrievable' => 'ライセンス設定でキーの取得が無効になっています。',
+        'key_not_stored' => 'このライセンスのキーは保存されていません。新しいライセンスでのみ利用可能です。',
     ],
 ];

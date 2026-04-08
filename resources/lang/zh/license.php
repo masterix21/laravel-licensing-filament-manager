@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => '许可证密钥将在保存后生成。',
         'key_retrievable' => '加密密钥检索已启用。',
         'key_not_retrievable' => '许可配置中已禁用密钥检索。',
+        'key_not_stored' => '此许可证未存储密钥。仅适用于新创建的许可证。',
     ],
 ];

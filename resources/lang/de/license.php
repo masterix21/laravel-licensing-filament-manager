@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'Der Lizenzschlüssel wird nach dem Speichern generiert.',
         'key_retrievable' => 'Verschlüsselter Schlüsselabruf ist aktiviert.',
         'key_not_retrievable' => 'Schlüsselabruf ist in der Lizenzkonfiguration deaktiviert.',
+        'key_not_stored' => 'Der Schlüssel ist für diese Lizenz nicht gespeichert. Nur für neue Lizenzen verfügbar.',
     ],
 ];

@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'Kunci lisensi akan dibuat setelah disimpan.',
         'key_retrievable' => 'Pengambilan kunci terenkripsi diaktifkan.',
         'key_not_retrievable' => 'Pengambilan kunci dinonaktifkan dalam konfigurasi lisensi.',
+        'key_not_stored' => 'Kunci tidak tersimpan untuk lisensi ini. Hanya tersedia untuk lisensi baru.',
     ],
 ];

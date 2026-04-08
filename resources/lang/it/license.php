@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'La chiave verrà generata dopo il salvataggio.',
         'key_retrievable' => 'Il recupero della chiave crittografata è abilitato.',
         'key_not_retrievable' => 'Il recupero della chiave è disabilitato nella configurazione.',
+        'key_not_stored' => 'La chiave non è memorizzata per questa licenza. Disponibile solo per le licenze create successivamente.',
     ],
 ];

@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'Khoá giấy phép sẽ được tạo sau khi lưu.',
         'key_retrievable' => 'Đã bật truy xuất khoá mã hoá.',
         'key_not_retrievable' => 'Truy xuất khoá bị tắt trong cấu hình cấp phép.',
+        'key_not_stored' => 'Khoá không được lưu trữ cho giấy phép này. Chỉ khả dụng cho giấy phép mới.',
     ],
 ];

@@ -184,7 +184,7 @@ class LicenseForm
                                     ->label(__('laravel-licensing-filament-manager::license.fields.key_visibility'))
                                     ->state(function (?License $record) {
                                         if (! $record) {
-                                            return null;
+                                            return __('laravel-licensing-filament-manager::license.security.key_not_yet_generated');
                                         }
 
                                         $retriever = app(EncryptedLicenseKeyRetriever::class);
@@ -193,13 +193,8 @@ class LicenseForm
                                             return __('laravel-licensing-filament-manager::license.security.key_not_retrievable');
                                         }
 
-                                        $key = $retriever->retrieve($record);
-
-                                        if (! $key) {
-                                            return __('laravel-licensing-filament-manager::license.security.key_not_yet_generated');
-                                        }
-
-                                        return $key;
+                                        return $retriever->retrieve($record)
+                                            ?? __('laravel-licensing-filament-manager::license.security.key_not_stored');
                                     })
                                     ->copyable()
                                     ->fontFamily('mono'),

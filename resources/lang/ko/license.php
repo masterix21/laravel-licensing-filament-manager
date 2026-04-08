@@ -73,5 +73,6 @@ return [
         'key_not_yet_generated' => '라이선스 키는 저장 후 생성됩니다.',
         'key_retrievable' => '암호화된 키 조회가 활성화되어 있습니다.',
         'key_not_retrievable' => '라이선싱 설정에서 키 조회가 비활성화되어 있습니다.',
+        'key_not_stored' => '이 라이선스의 키가 저장되어 있지 않습니다. 새로 생성된 라이선스에서만 사용 가능합니다.',
     ],
 ];

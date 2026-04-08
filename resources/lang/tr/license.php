@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'Lisans anahtari kaydetme isleminden sonra olusturulacaktir.',
         'key_retrievable' => 'Sifreli anahtar erisimi etkinlestirildi.',
         'key_not_retrievable' => 'Anahtar erisimi lisans yapilandirmasinda devre disi birakildi.',
+        'key_not_stored' => 'Bu lisans için anahtar kaydedilmemiş. Sadece yeni lisanslar için kullanılabilir.',
     ],
 ];

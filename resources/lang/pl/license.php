@@ -80,5 +80,6 @@ return [
         'key_not_yet_generated' => 'Klucz licencji zostanie wygenerowany po zapisaniu.',
         'key_retrievable' => 'Szyfrowane pobieranie klucza jest włączone.',
         'key_not_retrievable' => 'Pobieranie klucza jest wyłączone w konfiguracji licencjonowania.',
+        'key_not_stored' => 'Klucz nie jest zapisany dla tej licencji. Dostępny tylko dla nowych licencji.',
     ],
 ];
