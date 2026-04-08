@@ -230,7 +230,7 @@ class TemplatesRelationManager extends RelationManager
                     ->label(__('laravel-licensing-filament-manager::common.actions.view')),
                 EditAction::make()
                     ->label(__('laravel-licensing-filament-manager::common.actions.edit'))
-                    ->mutateFormDataUsing(fn (array $data) => $this->prepareTemplatePayload($data)),
+                    ->mutateDataUsing(fn (array $data) => $this->prepareTemplatePayload($data)),
                 DeleteAction::make()
                     ->label(__('laravel-licensing-filament-manager::common.actions.delete')),
             ])

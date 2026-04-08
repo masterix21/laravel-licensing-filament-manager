@@ -53,7 +53,7 @@ class ViewLicense extends ViewRecord
                 ->label(__('laravel-licensing-filament-manager::license.actions.renew'))
                 ->icon('heroicon-o-arrow-path')
                 ->color('info')
-                ->form([
+                ->schema([
                     Forms\Components\TextInput::make('duration_days')
                         ->label(__('laravel-licensing-filament-manager::license.fields.duration_days'))
                         ->numeric()

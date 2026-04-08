@@ -171,7 +171,7 @@ class SigningKeysRelationManager extends RelationManager
                     ->requiresConfirmation()
                     ->modalHeading(__('laravel-licensing-filament-manager::licensing-key.actions.revoke_modal_heading'))
                     ->modalDescription(__('laravel-licensing-filament-manager::licensing-key.actions.revoke_modal_description'))
-                    ->form([
+                    ->schema([
                         Forms\Components\Textarea::make('reason')
                             ->label(__('laravel-licensing-filament-manager::licensing-key.fields.revocation_reason'))
                             ->required(),
@@ -198,7 +198,7 @@ class SigningKeysRelationManager extends RelationManager
                         ->icon('heroicon-o-x-mark')
                         ->color('danger')
                         ->requiresConfirmation()
-                        ->form([
+                        ->schema([
                             Forms\Components\Textarea::make('reason')
                                 ->label(__('laravel-licensing-filament-manager::licensing-key.fields.revocation_reason'))
                                 ->required(),
