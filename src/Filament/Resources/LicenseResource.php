@@ -10,6 +10,7 @@ use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource\RelationManagers;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource\Schemas\LicenseForm;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource\Tables\LicenseTable;
+use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerPlugin;
 use LucaLongo\Licensing\Enums\LicenseStatus;
 
 class LicenseResource extends Resource
@@ -22,6 +23,11 @@ class LicenseResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-key';
 
     protected static ?int $navigationSort = 1;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return LaravelLicensingFilamentManagerPlugin::get()->getNavigationGroup();
+    }
 
     public static function getNavigationLabel(): string
     {

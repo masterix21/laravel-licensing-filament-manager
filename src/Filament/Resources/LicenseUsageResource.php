@@ -9,6 +9,7 @@ use Filament\Tables\Table;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseUsageResource\Pages;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseUsageResource\Schemas\LicenseUsageForm;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseUsageResource\Tables\LicenseUsageTable;
+use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerPlugin;
 
 class LicenseUsageResource extends Resource
 {
@@ -20,6 +21,11 @@ class LicenseUsageResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar-square';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return LaravelLicensingFilamentManagerPlugin::get()->getNavigationGroup();
+    }
 
     public static function getNavigationLabel(): string
     {

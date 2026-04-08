@@ -94,7 +94,7 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
 
     public function getNavigationGroup(): ?string
     {
-        return $this->evaluate($this->navigationGroup) ?? __('licensing-filament-manager::licensing.navigation_group');
+        return $this->evaluate($this->navigationGroup);
     }
 
     public function getNavigationSort(): ?int

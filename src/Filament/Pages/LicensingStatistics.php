@@ -7,12 +7,18 @@ use Filament\Pages\Page;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\ExpiringLicenses;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\LicenseStatsOverview;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\RecentLicenseActivations;
+use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerPlugin;
 
 class LicensingStatistics extends Page
 {
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
 
     protected string $view = 'licensing-filament-manager::pages.licensing-statistics';
+
+    public static function getNavigationGroup(): ?string
+    {
+        return LaravelLicensingFilamentManagerPlugin::get()->getNavigationGroup();
+    }
 
     public static function getNavigationLabel(): string
     {

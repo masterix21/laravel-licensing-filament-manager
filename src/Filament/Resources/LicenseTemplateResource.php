@@ -10,6 +10,7 @@ use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplate
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplateResource\RelationManagers;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplateResource\Schemas\LicenseTemplateForm;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplateResource\Tables\LicenseTemplateTable;
+use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerPlugin;
 
 class LicenseTemplateResource extends Resource
 {
@@ -21,6 +22,11 @@ class LicenseTemplateResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-group';
 
     protected static ?int $navigationSort = 0;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return LaravelLicensingFilamentManagerPlugin::get()->getNavigationGroup();
+    }
 
     public static function getNavigationLabel(): string
     {

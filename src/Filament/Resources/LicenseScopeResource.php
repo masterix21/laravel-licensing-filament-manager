@@ -10,6 +10,7 @@ use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeRes
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\RelationManagers;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Schemas\LicenseScopeForm;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource\Tables\LicenseScopeTable;
+use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerPlugin;
 
 class LicenseScopeResource extends Resource
 {
@@ -21,6 +22,11 @@ class LicenseScopeResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-rectangle-group';
 
     protected static ?int $navigationSort = 0;
+
+    public static function getNavigationGroup(): ?string
+    {
+        return LaravelLicensingFilamentManagerPlugin::get()->getNavigationGroup();
+    }
 
     public static function getNavigationLabel(): string
     {
