@@ -2,6 +2,42 @@
 
 All notable changes to `laravel-licensing-filament-manager` will be documented in this file.
 
+## 1.2.0 - 2026-04-08
+
+### Features
+
+- **License Template Resource** - New dedicated resource for managing license templates with full CRUD, relation managers, and form/table configurations
+- **License Key Management** - License keys are now generated with proper format (LIC-XXXXXX-...) and stored encrypted in meta for retrieval support
+- **Navigation Group Support** - Plugin now supports `->navigationGroup()` to customize the navigation group for all resources and pages
+- **Expanded i18n** - Added 10 new languages: Arabic, Indonesian, Japanese, Korean, Dutch, Portuguese (BR), Thai, Turkish, Ukrainian, Vietnamese (19 total)
+
+### Fixes
+
+- Fix license key not being recoverable after creation - keys are now stored encrypted and retrievable from the license view page
+- Fix missing `statuses` translations for Italian causing raw keys to display in status dropdown
+- Fix missing `trials` relation translation across all languages
+- Fix missing `currently_active` widget translation for 7 languages
+- Fix empty Italian license.php causing `array_replace_recursive()` TypeError
+- Fix translation namespace typo in plugin navigation group fallback
+- Distinguish between unsaved licenses and licenses created before encrypted key storage
+
+### Improvements
+
+- License creation now redirects to the view page instead of the index, so the generated key notification is visible
+- Security section in license view shows the retrievable key (copyable) when available, with clear messages for unavailable keys
+- Navigation group defaults to `null` when not configured (no forced grouping)
+- Comprehensive test suite for package components
+- CI workflow improvements and PHP 8.3 support
+
+### Requirements
+
+- PHP 8.3+
+- Laravel 11.0+ or 12.0+
+- Filament 4.0+
+- masterix21/laravel-licensing ^2.0
+
+**Full Changelog**: https://github.com/masterix21/laravel-licensing-filament-manager/compare/1.0.0...1.2.0
+
 ## 1.0.0 - 2025-09-18
 
 ### 🎉 Laravel Licensing Filament Manager v1.0.0
