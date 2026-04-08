@@ -5,6 +5,7 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseSc
 use Filament\Actions;
 use Filament\Resources\Pages\ViewRecord;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource;
+use LucaLongo\Licensing\Models\LicenseScope;
 
 class ViewLicenseScope extends ViewRecord
 {
@@ -12,7 +13,7 @@ class ViewLicenseScope extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        /** @var \LucaLongo\Licensing\Models\LicenseScope $record */
+        /** @var LicenseScope $record */
         $record = $this->record;
 
         return [

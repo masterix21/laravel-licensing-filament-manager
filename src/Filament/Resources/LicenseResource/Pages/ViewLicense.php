@@ -9,6 +9,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\ViewRecord;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
 use LucaLongo\Licensing\Enums\LicenseStatus;
+use LucaLongo\Licensing\Models\License;
 
 class ViewLicense extends ViewRecord
 {
@@ -16,7 +17,7 @@ class ViewLicense extends ViewRecord
 
     protected function getHeaderActions(): array
     {
-        /** @var \LucaLongo\Licensing\Models\License $record */
+        /** @var License $record */
         $record = $this->record;
 
         return [

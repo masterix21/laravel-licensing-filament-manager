@@ -5,6 +5,7 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseSc
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource;
+use LucaLongo\Licensing\Models\LicenseScope;
 
 class EditLicenseScope extends EditRecord
 {
@@ -22,7 +23,7 @@ class EditLicenseScope extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        /** @var \LucaLongo\Licensing\Models\LicenseScope $record */
+        /** @var LicenseScope $record */
         $record = $this->record;
 
         return [

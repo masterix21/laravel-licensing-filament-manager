@@ -7,6 +7,7 @@ use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
 use LucaLongo\Licensing\Enums\LicenseStatus;
+use LucaLongo\Licensing\Models\License;
 
 class EditLicense extends EditRecord
 {
@@ -14,7 +15,7 @@ class EditLicense extends EditRecord
 
     protected function getHeaderActions(): array
     {
-        /** @var \LucaLongo\Licensing\Models\License $record */
+        /** @var License $record */
         $record = $this->record;
 
         return [

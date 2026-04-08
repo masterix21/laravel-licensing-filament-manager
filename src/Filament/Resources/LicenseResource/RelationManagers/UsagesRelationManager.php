@@ -10,6 +10,7 @@ use Filament\Actions\ViewAction;
 use Filament\Forms;
 use Filament\Notifications\Notification;
 use Filament\Resources\RelationManagers\RelationManager;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -62,7 +63,7 @@ class UsagesRelationManager extends RelationManager
                 Forms\Components\DateTimePicker::make('revoked_at')
                     ->label(__('laravel-licensing-filament-manager::license-usage.fields.revoked_at'))
                     ->displayFormat('d/m/Y H:i')
-                    ->visible(fn (\Filament\Schemas\Components\Utilities\Get $get) => $get('status') === UsageStatus::Revoked->value),
+                    ->visible(fn (Get $get) => $get('status') === UsageStatus::Revoked->value),
             ]);
     }
 
