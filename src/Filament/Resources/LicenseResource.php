@@ -78,7 +78,7 @@ class LicenseResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::query()
+        return (string) static::getModel()::query()
             ->where('status', LicenseStatus::Active)
             ->where(function ($query) {
                 $query

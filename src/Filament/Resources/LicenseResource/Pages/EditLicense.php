@@ -14,15 +14,18 @@ class EditLicense extends EditRecord
 
     protected function getHeaderActions(): array
     {
+        /** @var \LucaLongo\Licensing\Models\License $record */
+        $record = $this->record;
+
         return [
             Actions\Action::make('activate')
                 ->label(__('laravel-licensing-filament-manager::license.actions.activate'))
                 ->icon('heroicon-o-play')
                 ->color('success')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === LicenseStatus::Pending)
-                ->action(function () {
-                    $this->record->activate();
+                ->visible(fn () => $record->status === LicenseStatus::Pending)
+                ->action(function () use ($record) {
+                    $record->activate();
                     $this->refreshFormData(['status', 'activated_at']);
 
                     Notification::make()
@@ -36,9 +39,9 @@ class EditLicense extends EditRecord
                 ->icon('heroicon-o-pause')
                 ->color('warning')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === LicenseStatus::Active)
-                ->action(function () {
-                    $this->record->suspend();
+                ->visible(fn () => $record->status === LicenseStatus::Active)
+                ->action(function () use ($record) {
+                    $record->suspend();
                     $this->refreshFormData(['status']);
 
                     Notification::make()

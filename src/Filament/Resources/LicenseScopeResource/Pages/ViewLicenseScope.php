@@ -12,6 +12,9 @@ class ViewLicenseScope extends ViewRecord
 
     protected function getHeaderActions(): array
     {
+        /** @var \LucaLongo\Licensing\Models\LicenseScope $record */
+        $record = $this->record;
+
         return [
             Actions\Action::make('rotate_keys')
                 ->label(__('laravel-licensing-filament-manager::license-scope.actions.rotate_keys'))
@@ -20,9 +23,9 @@ class ViewLicenseScope extends ViewRecord
                 ->requiresConfirmation()
                 ->modalHeading(__('laravel-licensing-filament-manager::license-scope.actions.rotate_keys_modal_heading'))
                 ->modalDescription(__('laravel-licensing-filament-manager::license-scope.actions.rotate_keys_modal_description'))
-                ->visible(fn () => $this->record->key_rotation_days > 0)
-                ->action(function () {
-                    $this->record->rotateKeys(__('laravel-licensing-filament-manager::license-scope.actions.manual_rotation'));
+                ->visible(fn () => $record->key_rotation_days > 0)
+                ->action(function () use ($record) {
+                    $record->rotateKeys(__('laravel-licensing-filament-manager::license-scope.actions.manual_rotation'));
                     $this->refreshFormData(['last_key_rotation_at', 'next_key_rotation_at']);
                 }),
 

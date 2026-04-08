@@ -74,7 +74,7 @@ class LicenseTemplateResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::query()->where('is_active', true)->count();
+        return (string) static::getModel()::query()->where('is_active', true)->count();
     }
 
     public static function getNavigationBadgeColor(): string|array|null

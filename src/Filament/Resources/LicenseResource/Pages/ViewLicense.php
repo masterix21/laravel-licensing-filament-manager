@@ -16,15 +16,18 @@ class ViewLicense extends ViewRecord
 
     protected function getHeaderActions(): array
     {
+        /** @var \LucaLongo\Licensing\Models\License $record */
+        $record = $this->record;
+
         return [
             Actions\Action::make('activate')
                 ->label(__('laravel-licensing-filament-manager::license.actions.activate'))
                 ->icon('heroicon-o-play')
                 ->color('success')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === LicenseStatus::Pending)
-                ->action(function () {
-                    $this->record->activate();
+                ->visible(fn () => $record->status === LicenseStatus::Pending)
+                ->action(function () use ($record) {
+                    $record->activate();
                     $this->refreshFormData(['status', 'activated_at']);
 
                     Notification::make()
@@ -38,9 +41,9 @@ class ViewLicense extends ViewRecord
                 ->icon('heroicon-o-pause')
                 ->color('warning')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === LicenseStatus::Active)
-                ->action(function () {
-                    $this->record->suspend();
+                ->visible(fn () => $record->status === LicenseStatus::Active)
+                ->action(function () use ($record) {
+                    $record->suspend();
                     $this->refreshFormData(['status']);
 
                     Notification::make()
@@ -61,14 +64,14 @@ class ViewLicense extends ViewRecord
                         ->default(365)
                         ->required(),
                 ])
-                ->action(function (array $data) {
-                    $baseDate = $this->record->expires_at instanceof CarbonInterface && $this->record->expires_at->isFuture()
-                        ? $this->record->expires_at
+                ->action(function (array $data) use ($record) {
+                    $baseDate = $record->expires_at instanceof CarbonInterface && $record->expires_at->isFuture()
+                        ? $record->expires_at
                         : now();
 
                     $newExpiresAt = $baseDate->copy()->addDays($data['duration_days']);
 
-                    $this->record->renew($newExpiresAt);
+                    $record->renew($newExpiresAt);
 
                     $this->refreshFormData(['expires_at', 'status']);
 

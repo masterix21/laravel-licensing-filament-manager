@@ -91,7 +91,11 @@ class LicenseScopeTable
 
                 Tables\Filters\Filter::make('needs_rotation')
                     ->label(__('laravel-licensing-filament-manager::license-scope.filters.needs_rotation'))
-                    ->query(fn (Builder $query) => $query->needingRotation()),
+                    ->query(fn (Builder $query) => $query
+                        ->where('key_rotation_days', '>', 0)
+                        ->where(fn (Builder $q) => $q
+                            ->whereNull('next_key_rotation_at')
+                            ->orWhere('next_key_rotation_at', '<=', now()))),
 
                 Tables\Filters\Filter::make('has_licenses')
                     ->label(__('laravel-licensing-filament-manager::license-scope.filters.has_licenses'))

@@ -19,7 +19,7 @@ class LicensesRelationManager extends RelationManager
 
     public function table(Table $table): Table
     {
-        return LicenseTable::configureForRelationManager($table, $this);
+        return LicenseTable::configureForRelationManager($table);
     }
 
     public static function getTitle($ownerRecord, $pageClass): string

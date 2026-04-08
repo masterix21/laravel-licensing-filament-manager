@@ -214,6 +214,7 @@ class TemplatesRelationManager extends RelationManager
                 CreateAction::make()
                     ->label(__('laravel-licensing-filament-manager::license-template.actions.create'))
                     ->using(function (array $data, RelationManager $livewire): LicenseTemplate {
+                        /** @var TemplatesRelationManager $livewire */
                         /** @var LicenseScope $scope */
                         $scope = $livewire->getOwnerRecord();
 
