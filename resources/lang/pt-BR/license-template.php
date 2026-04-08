@@ -1,0 +1,42 @@
+<?php
+
+return [
+    'fields' => [
+        'scope' => 'Escopo',
+        'global' => 'Global',
+        'name' => 'Nome do Modelo',
+        'slug' => 'Slug',
+        'tier_level' => 'Nível do Plano',
+        'parent_template' => 'Modelo Principal',
+        'is_active' => 'Ativo',
+        'supports_trial' => 'Suporta teste',
+        'trial_duration_days' => 'Duração do teste (Dias)',
+        'has_grace_period' => 'Tem período de carência',
+        'grace_period_days' => 'Período de carência (Dias)',
+        'license_duration_days' => 'Duração da licença (Dias)',
+        'default_max_usages' => 'Máx. Usos Padrão',
+        'days' => ':count dias',
+        'base_configuration' => 'Configuração Base',
+        'features' => 'Funcionalidades',
+        'entitlements' => 'Permissões',
+        'meta' => 'Metadados',
+        'licenses_count' => 'Licenças',
+    ],
+    'form' => [
+        'details' => 'Detalhes do Modelo',
+        'durations' => 'Durações e Períodos',
+        'configuration' => 'Configuração e Funcionalidades',
+        'metadata' => 'Metadados',
+    ],
+    'actions' => ['create' => 'Novo Modelo'],
+    'filters' => ['is_active' => 'Apenas modelos ativos'],
+    'help' => [
+        'license_duration_days' => 'Deixe vazio para licenças perpétuas',
+        'trial_duration_days' => 'Número de dias para o período de teste',
+        'grace_period_days' => 'Número de dias para o período de carência após a expiração',
+        'base_configuration' => 'Pares chave/valor incorporados à configuração base da licença (ex.: max_usages, validity_days, grace_days).',
+        'features' => 'Flags booleanas para alternância de funcionalidades expostas aos clientes.',
+        'entitlements' => 'Permissões numéricas ou textuais (limites, capacidades, etc.).',
+        'default_max_usages' => 'Número máximo de usos simultâneos por licença',
+    ],
+];

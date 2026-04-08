@@ -23,7 +23,7 @@ class RecentLicenseActivations extends BaseWidget
         return $table
             ->query(
                 $licenseUsageModel::query()
-                    ->with(['license', 'license.scope'])
+                    ->with(['license', 'license.template'])
                     ->latest('registered_at')
                     ->limit(10)
             )
@@ -33,8 +33,8 @@ class RecentLicenseActivations extends BaseWidget
                     ->tooltip(fn ($record) => $record->license?->id)
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('license.scope.name')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.license_scope'))
+                Tables\Columns\TextColumn::make('license.template.name')
+                    ->label(__('laravel-licensing-filament-manager::license.fields.template'))
                     ->badge()
                     ->color('info')
                     ->toggleable(),

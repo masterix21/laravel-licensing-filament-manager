@@ -4,12 +4,9 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseRe
 
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
-use LucaLongo\Licensing\Contracts\LicenseKeyGeneratorContract;
-use LucaLongo\Licensing\Models\License;
-use LucaLongo\Licensing\Models\LicenseScope;
-use LucaLongo\Licensing\Services\TemplateService;
 
 class CreateLicense extends CreateRecord
 {
@@ -27,50 +24,25 @@ class CreateLicense extends CreateRecord
         return __('laravel-licensing-filament-manager::license.notifications.created');
     }
 
-    protected function mutateFormDataBeforeCreate(array $data): array
+    protected function handleRecordCreation(array $data): Model
     {
-        return $data;
-    }
+        $licenseModel = config('licensing.models.license');
+        $templateModel = config('licensing.models.license_template');
 
-    protected function handleRecordCreation(array $data): License
-    {
-        $templateId = $data['template_id'];
-        unset($data['template_id']);
+        $this->generatedKey = Str::uuid()->toString();
+        $data['key_hash'] = $licenseModel::hashKey($this->generatedKey);
 
-        $scope = LicenseScope::findOrFail($data['license_scope_id']);
+        $templateId = $data['template_id'] ?? null;
 
-        /** @var TemplateService $templateService */
-        $templateService = app(TemplateService::class);
+        if ($templateId) {
+            $template = $templateModel::find($templateId);
 
-        $record = $templateService->createLicenseForScope($scope, $templateId, $data);
-
-        $this->generatedKey = null;
-
-        try {
-            if ($record->canRegenerateKey()) {
-                $this->generatedKey = $record->regenerateKey();
-            } else {
-                /** @var LicenseKeyGeneratorContract $generator */
-                $generator = app(LicenseKeyGeneratorContract::class);
-                $generated = $generator->generate($record);
-
-                $meta = $record->meta?->toArray() ?? [];
-
-                if ($record->canRetrieveKey()) {
-                    $meta['encrypted_key'] = Crypt::encryptString($generated);
-                    $this->generatedKey = $generated;
-                }
-
-                $record->update([
-                    'key_hash' => License::hashKey($generated),
-                    'meta' => $meta,
-                ]);
+            if ($template) {
+                return $licenseModel::createFromTemplate($template, $data);
             }
-        } catch (\Throwable $exception) {
-            report($exception);
         }
 
-        return $record->refresh();
+        return $licenseModel::create($data);
     }
 
     protected function afterCreate(): void
@@ -82,11 +54,13 @@ class CreateLicense extends CreateRecord
                 ->success()
                 ->persistent()
                 ->send();
-        } else {
-            Notification::make()
-                ->title(__('laravel-licensing-filament-manager::license.notifications.created'))
-                ->success()
-                ->send();
+
+            return;
         }
+
+        Notification::make()
+            ->title(__('laravel-licensing-filament-manager::license.notifications.created'))
+            ->success()
+            ->send();
     }
 }

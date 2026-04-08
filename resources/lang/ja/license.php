@@ -1,0 +1,77 @@
+<?php
+
+return [
+    'form' => [
+        'basic_information' => 'ライセンス情報',
+        'dates_activation' => '日付とアクティベーション',
+        'usage_statistics' => '使用統計',
+        'metadata' => 'メタデータ',
+        'security' => 'セキュリティ',
+    ],
+    'fields' => [
+        'id' => 'ライセンス ID',
+        'key_hash' => 'ライセンスキーハッシュ',
+        'status' => 'ステータス',
+        'license_scope' => 'ライセンススコープ',
+        'licensable' => 'ライセンス対象',
+        'template' => 'ライセンステンプレート',
+        'max_usages' => '最大使用回数',
+        'usages' => '使用回数',
+        'remaining_usages' => '残り使用回数',
+        'usage_percentage' => '使用率 %',
+        'duration_days' => '有効期間（日数）',
+        'activated_at' => 'アクティベート日時',
+        'expires_at' => '有効期限',
+        'meta' => 'メタデータ',
+        'key_visibility' => 'キーの取得',
+    ],
+    'actions' => [
+        'create' => '新規ライセンス',
+        'activate' => 'アクティベート',
+        'suspend' => '一時停止',
+        'renew' => '更新',
+        'show_key' => 'ライセンスキーを表示',
+        'regenerate_key' => 'ライセンスキーを再生成',
+    ],
+    'filters' => [
+        'expired' => '期限切れ',
+        'expiring_soon' => 'まもなく期限切れ',
+        'over_limit' => '使用制限超過',
+    ],
+    'help' => [
+        'expires_at' => '空のままにすると、テンプレートのデフォルト値またはスコープの設定に基づいて自動計算されます。',
+        'template' => 'テンプレートは最大使用回数、有効期間、機能、権限を制御します。',
+    ],
+    'notifications' => [
+        'created' => 'ライセンスを作成しました。',
+        'updated' => 'ライセンスを更新しました。',
+        'activated' => 'ライセンスをアクティベートしました。',
+        'suspended' => 'ライセンスを一時停止しました。',
+        'renewed' => 'ライセンスを更新しました。',
+        'key_generated' => 'ライセンスキーを生成しました。',
+        'key_retrieved' => 'ライセンスキーの準備ができました。',
+        'key_regenerated' => 'ライセンスキーを再生成しました。',
+        'key_unavailable' => 'キーの取得が無効になっているため、ライセンスキーを取得できません。',
+        'key_value' => 'ライセンスキー: :key',
+    ],
+    'statuses' => [
+        'pending' => '保留中',
+        'active' => '有効',
+        'grace' => '猶予期間',
+        'expired' => '期限切れ',
+        'suspended' => '停止中',
+        'cancelled' => 'キャンセル済み',
+    ],
+
+    'relations' => [
+        'usages' => '使用状況',
+        'renewals' => '更新履歴',
+        'transfers' => '移転履歴',
+        'trials' => 'トライアル',
+    ],
+    'security' => [
+        'key_not_yet_generated' => 'ライセンスキーは保存後に生成されます。',
+        'key_retrievable' => '暗号化キーの取得が有効です。',
+        'key_not_retrievable' => 'ライセンス設定でキーの取得が無効になっています。',
+    ],
+];

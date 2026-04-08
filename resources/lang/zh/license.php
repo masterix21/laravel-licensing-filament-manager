@@ -60,10 +60,20 @@ return [
         'key_value' => '许可证密钥：:key',
     ],
 
+    'statuses' => [
+        'pending' => '待处理',
+        'active' => '活跃',
+        'grace' => '宽限期',
+        'expired' => '已过期',
+        'suspended' => '已暂停',
+        'cancelled' => '已取消',
+    ],
+
     'relations' => [
         'usages' => '使用记录',
         'renewals' => '续费记录',
         'transfers' => '转移记录',
+        'trials' => '试用记录',
     ],
 
     'security' => [

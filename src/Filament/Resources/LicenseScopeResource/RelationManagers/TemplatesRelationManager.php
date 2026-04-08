@@ -14,6 +14,7 @@ use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Collection;
 use LucaLongo\Licensing\Models\LicenseScope;
 use LucaLongo\Licensing\Models\LicenseTemplate;
 
@@ -91,7 +92,7 @@ class TemplatesRelationManager extends RelationManager
                                 Forms\Components\Toggle::make('supports_trial')
                                     ->label(__('laravel-licensing-filament-manager::license-template.fields.supports_trial'))
                                     ->default(false)
-                                    ->reactive(),
+                                    ->live(),
 
                                 Forms\Components\TextInput::make('trial_duration_days')
                                     ->label(__('laravel-licensing-filament-manager::license-template.fields.trial_duration_days'))
@@ -109,7 +110,7 @@ class TemplatesRelationManager extends RelationManager
                                 Forms\Components\Toggle::make('has_grace_period')
                                     ->label(__('laravel-licensing-filament-manager::license-template.fields.has_grace_period'))
                                     ->default(false)
-                                    ->reactive(),
+                                    ->live(),
 
                                 Forms\Components\TextInput::make('grace_period_days')
                                     ->label(__('laravel-licensing-filament-manager::license-template.fields.grace_period_days'))
@@ -196,7 +197,7 @@ class TemplatesRelationManager extends RelationManager
 
                 Tables\Columns\TextColumn::make('license_duration_days')
                     ->label(__('laravel-licensing-filament-manager::license-template.fields.license_duration_days'))
-                    ->formatStateUsing(fn ($state) => $state ? __('laravel-licensing-filament-manager::license-template.days', ['count' => $state]) : '∞')
+                    ->formatStateUsing(fn ($state) => $state ? __('laravel-licensing-filament-manager::license-template.fields.days', ['count' => $state]) : '∞')
                     ->toggleable(),
 
                 Tables\Columns\TextColumn::make('created_at')
@@ -251,7 +252,7 @@ class TemplatesRelationManager extends RelationManager
             return $state->getArrayCopy();
         }
 
-        if ($state instanceof \Illuminate\Support\Collection) {
+        if ($state instanceof Collection) {
             return $state->toArray();
         }
 
@@ -264,7 +265,7 @@ class TemplatesRelationManager extends RelationManager
             return $value->getArrayCopy();
         }
 
-        if ($value instanceof \Illuminate\Support\Collection) {
+        if ($value instanceof Collection) {
             return $value->toArray();
         }
 

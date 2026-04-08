@@ -1,11 +1,11 @@
 <?php
 
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
-use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplateResource;
 use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseUsageResource;
 
-it('license scope resource exists', function () {
-    expect(class_exists(LicenseScopeResource::class))->toBeTrue();
+it('license template resource exists', function () {
+    expect(class_exists(LicenseTemplateResource::class))->toBeTrue();
 });
 
 it('license resource exists', function () {

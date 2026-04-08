@@ -60,10 +60,20 @@ return [
         'key_value' => 'Ключ лицензии: :key',
     ],
 
+    'statuses' => [
+        'pending' => 'Ожидает',
+        'active' => 'Активна',
+        'grace' => 'Льготный период',
+        'expired' => 'Истекла',
+        'suspended' => 'Приостановлена',
+        'cancelled' => 'Отменена',
+    ],
+
     'relations' => [
         'usages' => 'Использования',
         'renewals' => 'Продления',
         'transfers' => 'Передачи',
+        'trials' => 'Пробные версии',
     ],
 
     'security' => [

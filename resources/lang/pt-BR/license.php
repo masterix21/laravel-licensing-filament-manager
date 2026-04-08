@@ -1,0 +1,77 @@
+<?php
+
+return [
+    'form' => [
+        'basic_information' => 'Informações da Licença',
+        'dates_activation' => 'Datas e Ativação',
+        'usage_statistics' => 'Estatísticas de Uso',
+        'metadata' => 'Metadados',
+        'security' => 'Segurança',
+    ],
+    'fields' => [
+        'id' => 'ID da Licença',
+        'key_hash' => 'Hash da Chave de Licença',
+        'status' => 'Status',
+        'license_scope' => 'Escopo da Licença',
+        'licensable' => 'Entidade Licenciada',
+        'template' => 'Modelo de Licença',
+        'max_usages' => 'Máximo de Usos',
+        'usages' => 'Usos',
+        'remaining_usages' => 'Usos Restantes',
+        'usage_percentage' => 'Uso %',
+        'duration_days' => 'Duração (Dias)',
+        'activated_at' => 'Ativado em',
+        'expires_at' => 'Expira em',
+        'meta' => 'Metadados',
+        'key_visibility' => 'Recuperação da Chave',
+    ],
+    'actions' => [
+        'create' => 'Nova Licença',
+        'activate' => 'Ativar',
+        'suspend' => 'Suspender',
+        'renew' => 'Renovar',
+        'show_key' => 'Mostrar Chave de Licença',
+        'regenerate_key' => 'Regenerar Chave de Licença',
+    ],
+    'filters' => [
+        'expired' => 'Expiradas',
+        'expiring_soon' => 'Expirando em Breve',
+        'over_limit' => 'Acima do Limite de Uso',
+    ],
+    'help' => [
+        'expires_at' => 'Deixe vazio para calcular automaticamente com base nas configurações padrão do modelo ou do escopo.',
+        'template' => 'Os modelos controlam o máximo de usos, validade, funcionalidades e permissões.',
+    ],
+    'notifications' => [
+        'created' => 'Licença criada com sucesso.',
+        'updated' => 'Licença atualizada com sucesso.',
+        'activated' => 'Licença ativada com sucesso.',
+        'suspended' => 'Licença suspensa com sucesso.',
+        'renewed' => 'Licença renovada com sucesso.',
+        'key_generated' => 'Chave de licença gerada.',
+        'key_retrieved' => 'Chave de licença pronta.',
+        'key_regenerated' => 'Chave de licença regenerada.',
+        'key_unavailable' => 'A chave de licença não pode ser recuperada porque a recuperação está desativada.',
+        'key_value' => 'Chave de licença: :key',
+    ],
+    'statuses' => [
+        'pending' => 'Pendente',
+        'active' => 'Ativa',
+        'grace' => 'Período de carência',
+        'expired' => 'Expirada',
+        'suspended' => 'Suspensa',
+        'cancelled' => 'Cancelada',
+    ],
+
+    'relations' => [
+        'usages' => 'Usos',
+        'renewals' => 'Renovações',
+        'transfers' => 'Transferências',
+        'trials' => 'Avaliações',
+    ],
+    'security' => [
+        'key_not_yet_generated' => 'A chave de licença será gerada após salvar.',
+        'key_retrievable' => 'A recuperação de chave criptografada está habilitada.',
+        'key_not_retrievable' => 'A recuperação de chave está desativada na configuração de licenciamento.',
+    ],
+];

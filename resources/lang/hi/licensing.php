@@ -9,15 +9,20 @@ return [
             'model_label' => 'लाइसेंस',
             'plural_model_label' => 'लाइसेंस',
         ],
-        'license_scope' => [
-            'navigation_label' => 'लाइसेंस स्कोप',
-            'model_label' => 'लाइसेंस स्कोप',
-            'plural_model_label' => 'लाइसेंस स्कोप',
+        'license_template' => [
+            'navigation_label' => 'लाइसेंस टेम्प्लेट',
+            'model_label' => 'लाइसेंस टेम्प्लेट',
+            'plural_model_label' => 'लाइसेंस टेम्प्लेट',
         ],
         'license_usage' => [
             'navigation_label' => 'लाइसेंस उपयोग',
             'model_label' => 'लाइसेंस उपयोग',
             'plural_model_label' => 'लाइसेंस उपयोग',
+        ],
+        'license_scope' => [
+            'navigation_label' => 'लाइसेंस स्कोप',
+            'model_label' => 'लाइसेंस स्कोप',
+            'plural_model_label' => 'लाइसेंस स्कोप',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => 'लाइसेंस उपयोग रिकॉर्ड',
             'expiring_soon' => 'जल्दी समाप्त होने वाला',
             'expiring_soon_description' => 'अगले 30 दिनों में समाप्त होने वाले सक्रिय लाइसेंस',
-            'license_scopes' => 'लाइसेंस स्कोप',
-            'license_scopes_description' => 'उपलब्ध लाइसेंस प्रकार',
+            'license_templates' => 'लाइसेंस टेम्प्लेट',
+            'license_templates_description' => 'सक्रिय लाइसेंस टेम्प्लेट',
         ],
         'recent_usages' => [
             'heading' => 'हाल के लाइसेंस उपयोग',

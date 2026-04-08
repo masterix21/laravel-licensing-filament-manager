@@ -13,6 +13,7 @@ use Filament\Support\SupportServiceProvider;
 use Filament\Tables\TablesServiceProvider;
 use Filament\Widgets\WidgetsServiceProvider;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Foundation\Bootstrap\HandleExceptions;
 use Livewire\LivewireServiceProvider;
 use LucaLongo\LaravelLicensingFilamentManager\LaravelLicensingFilamentManagerServiceProvider;
 use Orchestra\Testbench\TestCase as Orchestra;
@@ -31,9 +32,9 @@ class TestCase extends Orchestra
 
     protected function tearDown(): void
     {
-        if (class_exists(\Illuminate\Foundation\Bootstrap\HandleExceptions::class)) {
+        if (class_exists(HandleExceptions::class)) {
             // Flush Laravel's exception handlers with this test instance so PHPUnit 12 receives a TestCase context.
-            \Illuminate\Foundation\Bootstrap\HandleExceptions::flushState($this);
+            HandleExceptions::flushState($this);
         }
 
         parent::tearDown();

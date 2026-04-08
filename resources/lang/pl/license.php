@@ -60,10 +60,20 @@ return [
         'key_value' => 'Klucz licencji: :key',
     ],
 
+    'statuses' => [
+        'pending' => 'Oczekująca',
+        'active' => 'Aktywna',
+        'grace' => 'Okres karencji',
+        'expired' => 'Wygasła',
+        'suspended' => 'Zawieszona',
+        'cancelled' => 'Anulowana',
+    ],
+
     'relations' => [
         'usages' => 'Użycia',
         'renewals' => 'Odnowienia',
         'transfers' => 'Transfery',
+        'trials' => 'Wersje próbne',
     ],
 
     'security' => [

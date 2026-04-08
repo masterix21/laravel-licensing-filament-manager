@@ -6,7 +6,6 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 use LucaLongo\Licensing\Enums\LicenseStatus;
-use LucaLongo\Licensing\Models\License;
 
 class ExpiringLicenses extends BaseWidget
 {
@@ -24,7 +23,7 @@ class ExpiringLicenses extends BaseWidget
         return $table
             ->query(
                 $licenseModel::query()
-                    ->with('scope')
+                    ->with('template')
                     ->where('status', LicenseStatus::Active)
                     ->whereNotNull('expires_at')
                     ->whereBetween('expires_at', [now(), now()->addDays(30)])
@@ -38,8 +37,8 @@ class ExpiringLicenses extends BaseWidget
                     ->limit(12)
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('scope.name')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.license_scope'))
+                Tables\Columns\TextColumn::make('template.name')
+                    ->label(__('laravel-licensing-filament-manager::license.fields.template'))
                     ->badge()
                     ->color('info')
                     ->sortable(),
@@ -47,10 +46,10 @@ class ExpiringLicenses extends BaseWidget
                     ->label(__('laravel-licensing-filament-manager::licensing.fields.expires_at'))
                     ->dateTime()
                     ->sortable()
-                    ->color(fn (License $record) => $record->expires_at?->diffInDays(now()) <= 7 ? 'danger' : 'warning'),
+                    ->color(fn ($record) => $record->expires_at?->diffInDays(now()) <= 7 ? 'danger' : 'warning'),
                 Tables\Columns\TextColumn::make('days_remaining')
                     ->label(__('laravel-licensing-filament-manager::licensing.fields.days_remaining'))
-                    ->getStateUsing(fn (License $record) => max(0, $record->daysUntilExpiration() ?? 0))
+                    ->getStateUsing(fn ($record) => max(0, $record->daysUntilExpiration() ?? 0))
                     ->badge()
                     ->color(fn ($state) => $state <= 7 ? 'danger' : 'warning'),
             ])

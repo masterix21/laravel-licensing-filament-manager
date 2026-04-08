@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Package Overview
 
-This package provides a complete Filament 4.x panel integration for managing all features of the `masterix21/laravel-licensing` package. It enables administrators to manage license scopes, licenses, license activations, and view licensing statistics directly within a Filament panel through dedicated resources, pages, and widgets.
+This package provides a complete Filament 4.x panel integration for managing all features of the `masterix21/laravel-licensing` package. It enables administrators to manage license templates, licenses, license activations, and view licensing statistics directly within a Filament panel through dedicated resources, pages, and widgets.
 
 ## Development Commands
 

@@ -1,0 +1,42 @@
+<?php
+
+return [
+    'fields' => [
+        'scope' => 'スコープ',
+        'global' => 'グローバル',
+        'name' => 'テンプレート名',
+        'slug' => 'Slug',
+        'tier_level' => 'ティアレベル',
+        'parent_template' => '親テンプレート',
+        'is_active' => '有効',
+        'supports_trial' => 'トライアル対応',
+        'trial_duration_days' => 'トライアル期間（日）',
+        'has_grace_period' => '猶予期間あり',
+        'grace_period_days' => '猶予期間（日）',
+        'license_duration_days' => 'ライセンス期間（日）',
+        'default_max_usages' => 'デフォルト最大使用数',
+        'days' => ':count 日',
+        'base_configuration' => '基本設定',
+        'features' => '機能',
+        'entitlements' => '権限',
+        'meta' => 'メタデータ',
+        'licenses_count' => 'ライセンス数',
+    ],
+    'form' => [
+        'details' => 'テンプレート詳細',
+        'durations' => '期間と期限',
+        'configuration' => '設定と機能',
+        'metadata' => 'メタデータ',
+    ],
+    'actions' => ['create' => '新規テンプレート'],
+    'filters' => ['is_active' => '有効なテンプレートのみ'],
+    'help' => [
+        'license_duration_days' => '永久ライセンスの場合は空欄',
+        'trial_duration_days' => 'トライアル期間の日数',
+        'grace_period_days' => '有効期限後の猶予期間の日数',
+        'base_configuration' => 'ライセンスの基本設定に組み込まれるキーと値のペア（例: max_usages, validity_days, grace_days）。',
+        'features' => 'クライアントに公開される機能のオン・オフフラグ。',
+        'entitlements' => '数値または文字列の権限（制限値、容量など）。',
+        'default_max_usages' => 'ライセンスごとの最大同時使用数',
+    ],
+];

@@ -60,10 +60,20 @@ return [
         'key_value' => 'Lizenzschlüssel: :key',
     ],
 
+    'statuses' => [
+        'pending' => 'Ausstehend',
+        'active' => 'Aktiv',
+        'grace' => 'Kulanzzeit',
+        'expired' => 'Abgelaufen',
+        'suspended' => 'Gesperrt',
+        'cancelled' => 'Storniert',
+    ],
+
     'relations' => [
         'usages' => 'Nutzungen',
         'renewals' => 'Erneuerungen',
         'transfers' => 'Übertragungen',
+        'trials' => 'Testversionen',
     ],
 
     'security' => [

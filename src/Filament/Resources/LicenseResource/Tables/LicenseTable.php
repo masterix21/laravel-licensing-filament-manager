@@ -4,19 +4,16 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseRe
 
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Notifications\Notification;
-use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use LucaLongo\Licensing\Enums\LicenseStatus;
 use LucaLongo\Licensing\Models\License;
-use LucaLongo\Licensing\Models\LicenseScope;
 
 class LicenseTable
 {
@@ -24,64 +21,23 @@ class LicenseTable
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.id'))
-                    ->searchable()
-                    ->copyable()
-                    ->sortable()
-                    ->limit(8)
-                    ->description(fn (License $record) => $record->template?->name),
-
-                Tables\Columns\TextColumn::make('scope.name')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.license_scope'))
-                    ->searchable()
-                    ->sortable()
+                Tables\Columns\TextColumn::make('template.scope.name')
+                    ->label(__('laravel-licensing-filament-manager::license-template.fields.scope'))
                     ->badge()
-                    ->color('info'),
+                    ->color('info')
+                    ->placeholder(__('laravel-licensing-filament-manager::license-template.fields.global'))
+                    ->toggleable(),
 
-                Tables\Columns\TextColumn::make('licensable')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.licensable'))
-                    ->formatStateUsing(function (License $record) {
-                        if (! $record->licensable_type || ! $record->licensable_id) {
-                            return '—';
-                        }
-
-                        $config = config('licensing-filament-manager.licensed_entities', []);
-                        $modelConfig = $config[$record->licensable_type] ?? null;
-
-                        if ($modelConfig && class_exists($record->licensable_type)) {
-                            try {
-                                $model = $record->licensable_type::find($record->licensable_id);
-                                if ($model) {
-                                    $titleField = $modelConfig['title'] ?? 'name';
-                                    $displayValue = data_get($model, $titleField, "#{$record->licensable_id}");
-
-                                    return sprintf(
-                                        '%s: %s',
-                                        class_basename($record->licensable_type),
-                                        $displayValue
-                                    );
-                                }
-                            } catch (\Exception $e) {
-                                // If we can't load the model, fall back to showing IDs
-                            }
-                        }
-
-                        // Fallback: show type and ID
-                        return sprintf(
-                            '%s: #%s',
-                            class_basename($record->licensable_type),
-                            $record->licensable_id
-                        );
-                    })
-                    ->sortable(query: function ($query, string $direction) {
-                        return $query->orderBy('licensable_type', $direction)
-                            ->orderBy('licensable_id', $direction);
-                    }),
+                Tables\Columns\TextColumn::make('template.name')
+                    ->label(__('laravel-licensing-filament-manager::license.fields.template'))
+                    ->searchable()
+                    ->sortable()
+                    ->description(fn (License $record) => $record->licensable ? class_basename($record->licensable_type) : null),
 
                 Tables\Columns\TextColumn::make('status')
                     ->label(__('laravel-licensing-filament-manager::license.fields.status'))
                     ->badge()
+                    ->formatStateUsing(fn (License $record) => __("laravel-licensing-filament-manager::license.statuses.{$record->status->value}"))
                     ->colors([
                         'warning' => LicenseStatus::Pending,
                         'success' => LicenseStatus::Active,
@@ -97,35 +53,26 @@ class LicenseTable
                     ->badge()
                     ->color(fn (int $state, License $record) => $state >= $record->max_usages ? 'danger' : 'success'),
 
-                Tables\Columns\TextColumn::make('activated_at')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.activated_at'))
-                    ->dateTime('d/m/Y H:i')
-                    ->sortable()
-                    ->placeholder(__('laravel-licensing-filament-manager::common.not_activated')),
-
                 Tables\Columns\TextColumn::make('expires_at')
                     ->label(__('laravel-licensing-filament-manager::license.fields.expires_at'))
-                    ->dateTime('d/m/Y H:i')
+                    ->dateTime('d/m/Y')
                     ->sortable()
-                    ->color(fn ($state) => $state && $state->isPast() ? 'danger' : 'success'),
+                    ->color(fn ($state) => $state?->isPast() ? 'danger' : null)
+                    ->placeholder(__('laravel-licensing-filament-manager::license-scope.perpetual')),
 
                 Tables\Columns\TextColumn::make('created_at')
                     ->label(__('laravel-licensing-filament-manager::common.created_at'))
-                    ->dateTime('d/m/Y H:i')
+                    ->dateTime('d/m/Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->label(__('laravel-licensing-filament-manager::license.fields.status'))
-                    ->options(LicenseStatus::class)
+                    ->options(collect(LicenseStatus::cases())->mapWithKeys(
+                        fn (LicenseStatus $status) => [$status->value => __("laravel-licensing-filament-manager::license.statuses.{$status->value}")]
+                    ))
                     ->multiple(),
-
-                Tables\Filters\SelectFilter::make('license_scope_id')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.license_scope'))
-                    ->relationship('scope', 'name')
-                    ->searchable()
-                    ->preload(),
 
                 Tables\Filters\SelectFilter::make('template_id')
                     ->label(__('laravel-licensing-filament-manager::license.fields.template'))
@@ -150,15 +97,16 @@ class LicenseTable
             ])
             ->recordActions([
                 ViewAction::make()
-                    ->label(__('laravel-licensing-filament-manager::common.actions.view')),
+                    ->iconButton(),
 
                 EditAction::make()
-                    ->label(__('laravel-licensing-filament-manager::common.actions.edit')),
+                    ->iconButton(),
 
                 Action::make('activate')
-                    ->label(__('laravel-licensing-filament-manager::license.actions.activate'))
+                    ->tooltip(__('laravel-licensing-filament-manager::license.actions.activate'))
                     ->icon('heroicon-o-play')
                     ->color('success')
+                    ->iconButton()
                     ->requiresConfirmation()
                     ->visible(fn (License $record) => $record->status === LicenseStatus::Pending)
                     ->action(function (License $record) {
@@ -171,9 +119,10 @@ class LicenseTable
                     }),
 
                 Action::make('suspend')
-                    ->label(__('laravel-licensing-filament-manager::license.actions.suspend'))
+                    ->tooltip(__('laravel-licensing-filament-manager::license.actions.suspend'))
                     ->icon('heroicon-o-pause')
                     ->color('warning')
+                    ->iconButton()
                     ->requiresConfirmation()
                     ->visible(fn (License $record) => $record->status === LicenseStatus::Active)
                     ->action(function (License $record) {
@@ -185,42 +134,8 @@ class LicenseTable
                             ->send();
                     }),
 
-                Action::make('show_key')
-                    ->label(__('laravel-licensing-filament-manager::license.actions.show_key'))
-                    ->icon('heroicon-o-key')
-                    ->visible(fn (License $record) => $record->canRetrieveKey())
-                    ->action(function (License $record) {
-                        $key = $record->retrieveKey();
-
-                        Notification::make()
-                            ->title(__('laravel-licensing-filament-manager::license.notifications.key_retrieved'))
-                            ->body($key
-                                ? __('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $key])
-                                : __('laravel-licensing-filament-manager::license.notifications.key_unavailable'))
-                            ->success()
-                            ->persistent()
-                            ->send();
-                    }),
-
-                Action::make('regenerate_key')
-                    ->label(__('laravel-licensing-filament-manager::license.actions.regenerate_key'))
-                    ->icon('heroicon-o-arrow-path')
-                    ->color('gray')
-                    ->requiresConfirmation()
-                    ->visible(fn (License $record) => $record->canRegenerateKey())
-                    ->action(function (License $record) {
-                        $newKey = $record->regenerateKey();
-
-                        Notification::make()
-                            ->title(__('laravel-licensing-filament-manager::license.notifications.key_regenerated'))
-                            ->body(__('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $newKey]))
-                            ->success()
-                            ->persistent()
-                            ->send();
-                    }),
-
                 DeleteAction::make()
-                    ->label(__('laravel-licensing-filament-manager::common.actions.delete')),
+                    ->iconButton(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -231,81 +146,20 @@ class LicenseTable
             ->defaultSort('created_at', 'desc');
     }
 
-    public static function configureForRelationManager(Table $table, $livewire): Table
+    public static function configureForRelationManager(Table $table): Table
     {
         $configuredTable = self::configure($table);
 
-        // Hide the scope column since we're already in a scope context
         $columns = collect($configuredTable->getColumns())
-            ->filter(fn ($column) => $column->getName() !== 'scope.name')
+            ->filter(fn ($column) => ! in_array($column->getName(), ['template.scope.name', 'template.name']))
             ->toArray();
 
-        // Remove the license_scope_id filter since we're already filtering by scope
         $filters = collect($configuredTable->getFilters())
-            ->filter(fn ($filter) => $filter->getName() !== 'license_scope_id')
+            ->filter(fn ($filter) => $filter->getName() !== 'template_id')
             ->toArray();
 
-        // Add custom header actions for relation manager
         return $configuredTable
             ->columns($columns)
-            ->filters($filters)
-            ->headerActions([
-                CreateAction::make()
-                    ->label(__('laravel-licensing-filament-manager::license.actions.create'))
-                    ->using(function (array $data) use ($livewire) {
-                        if (! $livewire instanceof RelationManager) {
-                            throw new \RuntimeException('This method can only be used with RelationManager instances');
-                        }
-
-                        /** @var LicenseScope $scope */
-                        $scope = $livewire->getOwnerRecord();
-
-                        $templateId = $data['template_id'] ?? null;
-                        $template = $templateId ? $scope->templates()->find($templateId) : null;
-
-                        // Prepare license data
-                        $licenseData = [
-                            'license_scope_id' => $scope->id,
-                            'licensable_type' => $data['licensable_type'] ?? null,
-                            'licensable_id' => $data['licensable_id'] ?? null,
-                            'max_usages' => $data['max_usages'] ?? ($template?->max_usages ?? 1),
-                            'expires_at' => $data['expires_at'] ?? null,
-                            'meta' => $data['meta'] ?? [],
-                        ];
-
-                        // Apply template defaults if provided
-                        if ($template) {
-                            $licenseData['template_id'] = $template->id;
-                            if (! isset($data['expires_at']) && $template->validity_days) {
-                                $licenseData['expires_at'] = now()->addDays($template->validity_days);
-                            }
-                            if (! isset($data['max_usages'])) {
-                                $licenseData['max_usages'] = $template->max_usages ?? 1;
-                            }
-                            // Merge template meta with provided meta
-                            $templateMeta = $template->meta ? $template->meta->toArray() : [];
-                            $providedMeta = $data['meta'] ?? [];
-                            $licenseData['meta'] = array_merge($templateMeta, $providedMeta);
-                        }
-
-                        // Create license with key using the built-in method
-                        /** @var License $license */
-                        $license = License::createWithKey($licenseData);
-
-                        // Get the temporarily stored key
-                        $generatedKey = $license->temporaryLicenseKey ?? null;
-
-                        if ($generatedKey) {
-                            Notification::make()
-                                ->title(__('laravel-licensing-filament-manager::license.notifications.key_generated'))
-                                ->body(__('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $generatedKey]))
-                                ->success()
-                                ->persistent()
-                                ->send();
-                        }
-
-                        return $license->refresh();
-                    }),
-            ]);
+            ->filters($filters);
     }
 }

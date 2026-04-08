@@ -5,6 +5,7 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 use LucaLongo\Licensing\Enums\LicenseStatus;
+use LucaLongo\Licensing\Enums\UsageStatus;
 
 class LicenseStatsOverview extends StatsOverviewWidget
 {
@@ -12,7 +13,7 @@ class LicenseStatsOverview extends StatsOverviewWidget
     {
         $licenseModel = config('licensing.models.license');
         $licenseUsageModel = config('licensing.models.license_usage');
-        $licenseScopeModel = config('licensing.models.license_scope');
+        $licenseTemplateModel = config('licensing.models.license_template');
 
         $totalLicenses = $licenseModel::count();
         $activeLicenses = $licenseModel::query()
@@ -27,8 +28,8 @@ class LicenseStatsOverview extends StatsOverviewWidget
             })
             ->count();
 
-        $totalUsages = $licenseUsageModel::count();
-        $totalScopes = $licenseScopeModel::count();
+        $totalUsages = $licenseUsageModel::where('status', UsageStatus::Active)->count();
+        $totalTemplates = $licenseTemplateModel::where('is_active', true)->count();
 
         $expiringSoon = $licenseModel::query()
             ->where('status', LicenseStatus::Active)
@@ -53,8 +54,8 @@ class LicenseStatsOverview extends StatsOverviewWidget
                 ->description(__('laravel-licensing-filament-manager::licensing.widgets.stats.expiring_soon_description'))
                 ->descriptionIcon('heroicon-m-clock')
                 ->color($expiringSoon > 0 ? 'warning' : 'success'),
-            Stat::make(__('laravel-licensing-filament-manager::licensing.widgets.stats.license_scopes'), $totalScopes)
-                ->description(__('laravel-licensing-filament-manager::licensing.widgets.stats.license_scopes_description'))
+            Stat::make(__('laravel-licensing-filament-manager::licensing.widgets.stats.license_templates'), $totalTemplates)
+                ->description(__('laravel-licensing-filament-manager::licensing.widgets.stats.license_templates_description'))
                 ->descriptionIcon('heroicon-m-rectangle-group')
                 ->color('warning'),
         ];

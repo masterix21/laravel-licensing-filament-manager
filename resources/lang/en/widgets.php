@@ -5,11 +5,12 @@ return [
     'active_licenses' => 'Active Licenses',
     'expiring_soon' => 'Expiring Soon',
     'active_usages' => 'Active Usages',
-    'license_scopes' => 'License Scopes',
+    'license_templates' => 'License Templates',
 
     'all_licenses_count' => 'All licenses in system',
     'no_active_licenses' => 'No active licenses',
     'expiring_30_days' => 'Expiring in next 30 days',
     'seats_in_use' => 'Seats currently in use',
-    'active_scopes' => 'Active license scopes',
+    'active_templates' => 'Active license templates',
+    'currently_active' => 'Currently active',
 ];

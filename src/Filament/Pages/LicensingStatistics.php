@@ -4,6 +4,9 @@ namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Pages;
 
 use BackedEnum;
 use Filament\Pages\Page;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\ExpiringLicenses;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\LicenseStatsOverview;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\RecentLicenseActivations;
 
 class LicensingStatistics extends Page
 {
@@ -26,9 +29,9 @@ class LicensingStatistics extends Page
     public function getWidgets(): array
     {
         return [
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\LicenseStatsOverview::class,
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\RecentLicenseActivations::class,
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\ExpiringLicenses::class,
+            LicenseStatsOverview::class,
+            RecentLicenseActivations::class,
+            ExpiringLicenses::class,
         ];
     }
 

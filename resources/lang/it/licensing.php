@@ -9,15 +9,20 @@ return [
             'model_label' => 'Licenza',
             'plural_model_label' => 'Licenze',
         ],
-        'license_scope' => [
-            'navigation_label' => 'Ambiti licenza',
-            'model_label' => 'Ambito licenza',
-            'plural_model_label' => 'Ambiti licenza',
+        'license_template' => [
+            'navigation_label' => 'Template licenza',
+            'model_label' => 'Template licenza',
+            'plural_model_label' => 'Template licenza',
         ],
         'license_usage' => [
             'navigation_label' => 'Utilizzi licenza',
             'model_label' => 'Utilizzo licenza',
             'plural_model_label' => 'Utilizzi licenza',
+        ],
+        'license_scope' => [
+            'navigation_label' => 'Ambiti di Licenza',
+            'model_label' => 'Ambito di Licenza',
+            'plural_model_label' => 'Ambiti di Licenza',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => 'Record di utilizzo licenze',
             'expiring_soon' => 'In scadenza',
             'expiring_soon_description' => 'Licenze attive in scadenza nei prossimi 30 giorni',
-            'license_scopes' => 'Ambiti licenza',
-            'license_scopes_description' => 'Tipologie di licenza disponibili',
+            'license_templates' => 'Template licenza',
+            'license_templates_description' => 'Template licenza attivi',
         ],
         'recent_usages' => [
             'heading' => 'Utilizzi licenza recenti',

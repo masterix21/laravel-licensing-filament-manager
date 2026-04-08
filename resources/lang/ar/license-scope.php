@@ -1,0 +1,58 @@
+<?php
+
+return [
+    'form' => [
+        'basic_information' => 'المعلومات الأساسية',
+        'default_license_settings' => 'إعدادات الترخيص الافتراضية',
+        'default_license_settings_description' => 'القيم الافتراضية للتراخيص المنشأة ضمن هذا النطاق',
+        'key_rotation_settings' => 'إعدادات تدوير المفاتيح',
+        'key_rotation_settings_description' => 'تكوين التدوير التلقائي لمفاتيح التوقيع',
+        'metadata' => 'البيانات الوصفية',
+    ],
+    'fields' => [
+        'name' => 'الاسم',
+        'slug' => 'Slug',
+        'slug_help' => 'معرّف ملائم للروابط (أحرف صغيرة وأرقام وشرطات فقط)',
+        'identifier' => 'المعرّف',
+        'identifier_help' => 'معرّف فريد لاستخدام API (مثال: com.company.product)',
+        'description' => 'الوصف',
+        'is_active' => 'نشط',
+        'default_max_usages' => 'الحد الأقصى الافتراضي للاستخدام',
+        'default_duration_days' => 'المدة الافتراضية',
+        'default_duration_days_help' => 'اتركه فارغاً للتراخيص الدائمة',
+        'default_grace_days' => 'فترة السماح الافتراضية',
+        'key_rotation_days' => 'فترة تدوير المفاتيح',
+        'key_rotation_days_help' => 'اضبطه على 0 لتعطيل التدوير التلقائي',
+        'last_key_rotation_at' => 'آخر تدوير للمفاتيح',
+        'next_key_rotation_at' => 'التدوير المجدول التالي',
+        'licenses_count' => 'إجمالي التراخيص',
+        'active_licenses_count' => 'التراخيص النشطة',
+        'meta' => 'بيانات وصفية إضافية',
+    ],
+    'actions' => [
+        'create' => 'نطاق ترخيص جديد',
+        'rotate_keys' => 'تدوير المفاتيح',
+        'rotate_keys_modal_heading' => 'تدوير مفاتيح التوقيع',
+        'rotate_keys_modal_description' => 'سيتم إلغاء المفاتيح النشطة الحالية وإنشاء مفاتيح جديدة. لا يمكن التراجع عن هذا الإجراء.',
+        'manual_rotation' => 'تدوير يدوي',
+    ],
+    'filters' => [
+        'needs_rotation' => 'يحتاج تدوير المفاتيح',
+        'has_licenses' => 'يحتوي على تراخيص',
+    ],
+    'notifications' => [
+        'created' => 'تم إنشاء نطاق الترخيص بنجاح.',
+        'updated' => 'تم تحديث نطاق الترخيص بنجاح.',
+    ],
+    'relations' => [
+        'licenses' => 'التراخيص',
+        'signing_keys' => 'مفاتيح التوقيع',
+    ],
+    'perpetual' => 'دائم',
+    'unlimited' => 'غير محدود',
+    'seats' => 'مقاعد',
+    'days' => 'أيام',
+    'none' => 'لا شيء',
+    'rotation_days' => ':days أيام',
+    'disabled' => 'معطّل',
+];

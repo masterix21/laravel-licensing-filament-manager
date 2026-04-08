@@ -1,0 +1,77 @@
+<?php
+
+return [
+    'form' => [
+        'basic_information' => '라이선스 정보',
+        'dates_activation' => '날짜 및 활성화',
+        'usage_statistics' => '사용 통계',
+        'metadata' => '메타데이터',
+        'security' => '보안',
+    ],
+    'fields' => [
+        'id' => '라이선스 ID',
+        'key_hash' => '라이선스 키 해시',
+        'status' => '상태',
+        'license_scope' => '라이선스 범위',
+        'licensable' => '라이선스 대상',
+        'template' => '라이선스 템플릿',
+        'max_usages' => '최대 사용 횟수',
+        'usages' => '사용 횟수',
+        'remaining_usages' => '남은 사용 횟수',
+        'usage_percentage' => '사용률 %',
+        'duration_days' => '기간 (일)',
+        'activated_at' => '활성화일',
+        'expires_at' => '만료일',
+        'meta' => '메타데이터',
+        'key_visibility' => '키 조회',
+    ],
+    'actions' => [
+        'create' => '새 라이선스',
+        'activate' => '활성화',
+        'suspend' => '정지',
+        'renew' => '갱신',
+        'show_key' => '라이선스 키 보기',
+        'regenerate_key' => '라이선스 키 재생성',
+    ],
+    'filters' => [
+        'expired' => '만료됨',
+        'expiring_soon' => '곧 만료',
+        'over_limit' => '사용 한도 초과',
+    ],
+    'help' => [
+        'expires_at' => '비워두면 템플릿 기본값 또는 범위 설정에 따라 자동으로 계산됩니다.',
+        'template' => '템플릿은 최대 사용 횟수, 유효 기간, 기능 및 권한을 제어합니다.',
+    ],
+    'notifications' => [
+        'created' => '라이선스가 성공적으로 생성되었습니다.',
+        'updated' => '라이선스가 성공적으로 업데이트되었습니다.',
+        'activated' => '라이선스가 성공적으로 활성화되었습니다.',
+        'suspended' => '라이선스가 성공적으로 정지되었습니다.',
+        'renewed' => '라이선스가 성공적으로 갱신되었습니다.',
+        'key_generated' => '라이선스 키가 생성되었습니다.',
+        'key_retrieved' => '라이선스 키가 준비되었습니다.',
+        'key_regenerated' => '라이선스 키가 재생성되었습니다.',
+        'key_unavailable' => '키 조회가 비활성화되어 라이선스 키를 가져올 수 없습니다.',
+        'key_value' => '라이선스 키: :key',
+    ],
+    'statuses' => [
+        'pending' => '대기중',
+        'active' => '활성',
+        'grace' => '유예기간',
+        'expired' => '만료',
+        'suspended' => '정지',
+        'cancelled' => '취소',
+    ],
+
+    'relations' => [
+        'usages' => '사용 내역',
+        'renewals' => '갱신 내역',
+        'transfers' => '이전 내역',
+        'trials' => '체험판',
+    ],
+    'security' => [
+        'key_not_yet_generated' => '라이선스 키는 저장 후 생성됩니다.',
+        'key_retrievable' => '암호화된 키 조회가 활성화되어 있습니다.',
+        'key_not_retrievable' => '라이선싱 설정에서 키 조회가 비활성화되어 있습니다.',
+    ],
+];

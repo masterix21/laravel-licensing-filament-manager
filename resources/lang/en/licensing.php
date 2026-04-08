@@ -9,15 +9,20 @@ return [
             'model_label' => 'License',
             'plural_model_label' => 'Licenses',
         ],
-        'license_scope' => [
-            'navigation_label' => 'License Scopes',
-            'model_label' => 'License Scope',
-            'plural_model_label' => 'License Scopes',
+        'license_template' => [
+            'navigation_label' => 'License Templates',
+            'model_label' => 'License Template',
+            'plural_model_label' => 'License Templates',
         ],
         'license_usage' => [
             'navigation_label' => 'License Usages',
             'model_label' => 'License Usage',
             'plural_model_label' => 'License Usages',
+        ],
+        'license_scope' => [
+            'navigation_label' => 'License Scopes',
+            'model_label' => 'License Scope',
+            'plural_model_label' => 'License Scopes',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => 'License usage records',
             'expiring_soon' => 'Expiring Soon',
             'expiring_soon_description' => 'Active licenses expiring in the next 30 days',
-            'license_scopes' => 'License Scopes',
-            'license_scopes_description' => 'Available license types',
+            'license_templates' => 'License Templates',
+            'license_templates_description' => 'Active license templates',
         ],
         'recent_usages' => [
             'heading' => 'Recent License Usages',

@@ -5,6 +5,14 @@ namespace LucaLongo\LaravelLicensingFilamentManager;
 use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Filament\Support\Concerns\EvaluatesClosures;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Pages\LicensingStatistics;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplateResource;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseUsageResource;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\ExpiringLicenses;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\LicenseStatsOverview;
+use LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\RecentLicenseActivations;
 
 class LaravelLicensingFilamentManagerPlugin implements Plugin
 {
@@ -112,9 +120,10 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
     protected function getResources(): array
     {
         return [
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseResource::class,
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseScopeResource::class,
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseUsageResource::class,
+            LicenseScopeResource::class,
+            LicenseResource::class,
+            LicenseTemplateResource::class,
+            LicenseUsageResource::class,
         ];
     }
 
@@ -125,7 +134,7 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
         }
 
         return [
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Pages\LicensingStatistics::class,
+            LicensingStatistics::class,
         ];
     }
 
@@ -136,9 +145,9 @@ class LaravelLicensingFilamentManagerPlugin implements Plugin
         }
 
         return [
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\LicenseStatsOverview::class,
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\RecentLicenseActivations::class,
-            \LucaLongo\LaravelLicensingFilamentManager\Filament\Widgets\ExpiringLicenses::class,
+            LicenseStatsOverview::class,
+            RecentLicenseActivations::class,
+            ExpiringLicenses::class,
         ];
     }
 }

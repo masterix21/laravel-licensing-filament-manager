@@ -9,15 +9,20 @@ return [
             'model_label' => 'Lizenz',
             'plural_model_label' => 'Lizenzen',
         ],
-        'license_scope' => [
-            'navigation_label' => 'Lizenzbereiche',
-            'model_label' => 'Lizenzbereich',
-            'plural_model_label' => 'Lizenzbereiche',
+        'license_template' => [
+            'navigation_label' => 'Lizenzvorlagen',
+            'model_label' => 'Lizenzvorlage',
+            'plural_model_label' => 'Lizenzvorlagen',
         ],
         'license_usage' => [
             'navigation_label' => 'Lizenznutzungen',
             'model_label' => 'Lizenznutzung',
             'plural_model_label' => 'Lizenznutzungen',
+        ],
+        'license_scope' => [
+            'navigation_label' => 'Lizenzbereiche',
+            'model_label' => 'Lizenzbereich',
+            'plural_model_label' => 'Lizenzbereiche',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => 'Lizenznutzungseinträge',
             'expiring_soon' => 'Läuft bald ab',
             'expiring_soon_description' => 'Aktive Lizenzen, die in den nächsten 30 Tagen ablaufen',
-            'license_scopes' => 'Lizenzbereiche',
-            'license_scopes_description' => 'Verfügbare Lizenztypen',
+            'license_templates' => 'Lizenzvorlagen',
+            'license_templates_description' => 'Aktive Lizenzvorlagen',
         ],
         'recent_usages' => [
             'heading' => 'Aktuelle Lizenznutzungen',

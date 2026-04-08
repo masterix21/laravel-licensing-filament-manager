@@ -53,16 +53,6 @@ class LicenseScopeTable
                     ->badge()
                     ->color('success'),
 
-                Tables\Columns\TextColumn::make('default_max_usages')
-                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_max_usages'))
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                Tables\Columns\TextColumn::make('default_duration_days')
-                    ->label(__('laravel-licensing-filament-manager::license-scope.fields.default_duration_days'))
-                    ->sortable()
-                    ->placeholder(__('laravel-licensing-filament-manager::license-scope.perpetual'))
-                    ->toggleable(isToggledHiddenByDefault: true),
 
                 Tables\Columns\TextColumn::make('key_rotation_days')
                     ->label(__('laravel-licensing-filament-manager::license-scope.fields.key_rotation_days'))

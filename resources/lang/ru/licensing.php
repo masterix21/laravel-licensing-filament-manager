@@ -9,15 +9,20 @@ return [
             'model_label' => 'Лицензия',
             'plural_model_label' => 'Лицензии',
         ],
-        'license_scope' => [
-            'navigation_label' => 'Области лицензий',
-            'model_label' => 'Область лицензии',
-            'plural_model_label' => 'Области лицензий',
+        'license_template' => [
+            'navigation_label' => 'Шаблоны лицензий',
+            'model_label' => 'Шаблон лицензии',
+            'plural_model_label' => 'Шаблоны лицензий',
         ],
         'license_usage' => [
             'navigation_label' => 'Использования лицензий',
             'model_label' => 'Использование лицензии',
             'plural_model_label' => 'Использования лицензий',
+        ],
+        'license_scope' => [
+            'navigation_label' => 'Области лицензий',
+            'model_label' => 'Область лицензии',
+            'plural_model_label' => 'Области лицензий',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => 'Записи использования лицензий',
             'expiring_soon' => 'Истекают скоро',
             'expiring_soon_description' => 'Активные лицензии, истекающие в ближайшие 30 дней',
-            'license_scopes' => 'Области лицензий',
-            'license_scopes_description' => 'Доступные типы лицензий',
+            'license_templates' => 'Шаблоны лицензий',
+            'license_templates_description' => 'Активные шаблоны лицензий',
         ],
         'recent_usages' => [
             'heading' => 'Последние использования лицензий',

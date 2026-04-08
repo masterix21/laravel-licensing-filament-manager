@@ -9,15 +9,20 @@ return [
             'model_label' => 'Licence',
             'plural_model_label' => 'Licences',
         ],
-        'license_scope' => [
-            'navigation_label' => 'Périmètres de licence',
-            'model_label' => 'Périmètre de licence',
-            'plural_model_label' => 'Périmètres de licence',
+        'license_template' => [
+            'navigation_label' => 'Modèles de licence',
+            'model_label' => 'Modèle de licence',
+            'plural_model_label' => 'Modèles de licence',
         ],
         'license_usage' => [
             'navigation_label' => 'Utilisations de licence',
             'model_label' => 'Utilisation de licence',
             'plural_model_label' => 'Utilisations de licence',
+        ],
+        'license_scope' => [
+            'navigation_label' => 'Portées de Licence',
+            'model_label' => 'Portée de Licence',
+            'plural_model_label' => 'Portées de Licence',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => 'Enregistrements d\'utilisation de licence',
             'expiring_soon' => 'Expire bientôt',
             'expiring_soon_description' => 'Licences actives expirant dans les 30 prochains jours',
-            'license_scopes' => 'Périmètres de licence',
-            'license_scopes_description' => 'Types de licence disponibles',
+            'license_templates' => 'Modèles de licence',
+            'license_templates_description' => 'Modèles de licence actifs',
         ],
         'recent_usages' => [
             'heading' => 'Utilisations récentes de licence',

@@ -1,0 +1,58 @@
+<?php
+
+return [
+    'form' => [
+        'basic_information' => '기본 정보',
+        'default_license_settings' => '기본 라이선스 설정',
+        'default_license_settings_description' => '이 범위 내에서 생성되는 라이선스의 기본값',
+        'key_rotation_settings' => '키 로테이션 설정',
+        'key_rotation_settings_description' => '자동 서명 키 로테이션 구성',
+        'metadata' => '메타데이터',
+    ],
+    'fields' => [
+        'name' => '이름',
+        'slug' => 'Slug',
+        'slug_help' => 'URL 친화적 식별자 (소문자, 숫자, 하이픈만 사용 가능)',
+        'identifier' => '식별자',
+        'identifier_help' => 'API 사용을 위한 고유 식별자 (예: com.company.product)',
+        'description' => '설명',
+        'is_active' => '활성',
+        'default_max_usages' => '기본 최대 사용 횟수',
+        'default_duration_days' => '기본 기간',
+        'default_duration_days_help' => '영구 라이선스의 경우 비워두세요',
+        'default_grace_days' => '기본 유예 기간',
+        'key_rotation_days' => '키 로테이션 주기',
+        'key_rotation_days_help' => '자동 로테이션을 비활성화하려면 0으로 설정',
+        'last_key_rotation_at' => '마지막 키 로테이션',
+        'next_key_rotation_at' => '다음 예정 로테이션',
+        'licenses_count' => '전체 라이선스',
+        'active_licenses_count' => '활성 라이선스',
+        'meta' => '추가 메타데이터',
+    ],
+    'actions' => [
+        'create' => '새 라이선스 범위',
+        'rotate_keys' => '키 로테이션',
+        'rotate_keys_modal_heading' => '서명 키 로테이션',
+        'rotate_keys_modal_description' => '현재 활성 키를 해지하고 새 키를 생성합니다. 이 작업은 되돌릴 수 없습니다.',
+        'manual_rotation' => '수동 로테이션',
+    ],
+    'filters' => [
+        'needs_rotation' => '키 로테이션 필요',
+        'has_licenses' => '라이선스 보유',
+    ],
+    'notifications' => [
+        'created' => '라이선스 범위가 성공적으로 생성되었습니다.',
+        'updated' => '라이선스 범위가 성공적으로 업데이트되었습니다.',
+    ],
+    'relations' => [
+        'licenses' => '라이선스',
+        'signing_keys' => '서명 키',
+    ],
+    'perpetual' => '영구',
+    'unlimited' => '무제한',
+    'seats' => '석',
+    'days' => '일',
+    'none' => '없음',
+    'rotation_days' => ':days일',
+    'disabled' => '비활성화됨',
+];

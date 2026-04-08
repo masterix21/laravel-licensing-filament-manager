@@ -9,15 +9,20 @@ return [
             'model_label' => '许可证',
             'plural_model_label' => '许可证',
         ],
-        'license_scope' => [
-            'navigation_label' => '许可证范围',
-            'model_label' => '许可证范围',
-            'plural_model_label' => '许可证范围',
+        'license_template' => [
+            'navigation_label' => '许可证模板',
+            'model_label' => '许可证模板',
+            'plural_model_label' => '许可证模板',
         ],
         'license_usage' => [
             'navigation_label' => '许可证使用',
             'model_label' => '许可证使用',
             'plural_model_label' => '许可证使用',
+        ],
+        'license_scope' => [
+            'navigation_label' => '许可证范围',
+            'model_label' => '许可证范围',
+            'plural_model_label' => '许可证范围',
         ],
     ],
 
@@ -38,8 +43,8 @@ return [
             'total_usages_description' => '许可证使用记录',
             'expiring_soon' => '即将过期',
             'expiring_soon_description' => '在未来30天内过期的活跃许可证',
-            'license_scopes' => '许可证范围',
-            'license_scopes_description' => '可用的许可证类型',
+            'license_templates' => '许可证模板',
+            'license_templates_description' => '活跃的许可证模板',
         ],
         'recent_usages' => [
             'heading' => '最近的许可证使用',

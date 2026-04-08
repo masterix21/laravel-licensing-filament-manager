@@ -60,10 +60,20 @@ return [
         'key_value' => 'लाइसेंस कुंजी: :key',
     ],
 
+    'statuses' => [
+        'pending' => 'लंबित',
+        'active' => 'सक्रिय',
+        'grace' => 'अनुग्रह अवधि',
+        'expired' => 'समाप्त',
+        'suspended' => 'निलंबित',
+        'cancelled' => 'रद्द',
+    ],
+
     'relations' => [
         'usages' => 'उपयोग',
         'renewals' => 'नवीनीकरण',
         'transfers' => 'स्थानांतरण',
+        'trials' => 'परीक्षण',
     ],
 
     'security' => [

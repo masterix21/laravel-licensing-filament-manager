@@ -1,0 +1,152 @@
+<?php
+
+namespace LucaLongo\LaravelLicensingFilamentManager\Filament\Resources\LicenseTemplateResource\Schemas;
+
+use Filament\Forms;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Utilities\Get;
+use Filament\Schemas\Schema;
+use LucaLongo\Licensing\Models\LicenseTemplate;
+
+class LicenseTemplateForm
+{
+    public static function configure(Schema $schema): Schema
+    {
+        return $schema
+            ->columns()
+            ->schema([
+                Section::make(__('laravel-licensing-filament-manager::license-template.form.details'))
+                    ->schema([
+                        Forms\Components\Select::make('license_scope_id')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.scope'))
+                            ->relationship('scope', 'name')
+                            ->searchable()
+                            ->preload()
+                            ->nullable(),
+
+                        Forms\Components\TextInput::make('name')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.name'))
+                            ->required()
+                            ->maxLength(255),
+
+                        Forms\Components\TextInput::make('slug')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.slug'))
+                            ->disabled()
+                            ->dehydrated(false)
+                            ->visible(fn (?LicenseTemplate $record) => (bool) $record?->slug),
+
+                        Forms\Components\TextInput::make('tier_level')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.tier_level'))
+                            ->numeric()
+                            ->minValue(1)
+                            ->required()
+                            ->default(1),
+
+                        Forms\Components\Select::make('parent_template_id')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.parent_template'))
+                            ->relationship(
+                                'parentTemplate',
+                                'name',
+                                modifyQueryUsing: function ($query, ?LicenseTemplate $record) {
+                                    if ($record?->exists) {
+                                        $query->where('id', '!=', $record->getKey());
+                                    }
+
+                                    return $query;
+                                }
+                            )
+                            ->searchable()
+                            ->preload(),
+
+                        Forms\Components\Toggle::make('is_active')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.is_active'))
+                            ->default(true),
+                    ]),
+
+                Section::make(__('laravel-licensing-filament-manager::license-template.form.durations'))
+                    ->columns(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('default_max_usages')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.default_max_usages'))
+                            ->numeric()
+                            ->minValue(1)
+                            ->nullable()
+                            ->helperText(__('laravel-licensing-filament-manager::license-template.help.default_max_usages')),
+
+                        Forms\Components\TextInput::make('license_duration_days')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.license_duration_days'))
+                            ->numeric()
+                            ->minValue(1)
+                            ->nullable()
+                            ->helperText(__('laravel-licensing-filament-manager::license-template.help.license_duration_days')),
+
+                        Grid::make()
+                            ->columns(1)
+                            ->schema([
+                                Forms\Components\Toggle::make('supports_trial')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.supports_trial'))
+                                    ->default(false)
+                                    ->live(),
+
+                                Forms\Components\TextInput::make('trial_duration_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.trial_duration_days'))
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->visible(fn (Get $get) => $get('supports_trial'))
+                                    ->required(fn (Get $get) => $get('supports_trial'))
+                                    ->helperText(__('laravel-licensing-filament-manager::license-template.help.trial_duration_days')),
+                            ]),
+
+                        Grid::make()
+                            ->columns(1)
+                            ->schema([
+                                Forms\Components\Toggle::make('has_grace_period')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.has_grace_period'))
+                                    ->default(false)
+                                    ->live(),
+
+                                Forms\Components\TextInput::make('grace_period_days')
+                                    ->label(__('laravel-licensing-filament-manager::license-template.fields.grace_period_days'))
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->visible(fn (Get $get) => $get('has_grace_period'))
+                                    ->required(fn (Get $get) => $get('has_grace_period'))
+                                    ->helperText(__('laravel-licensing-filament-manager::license-template.help.grace_period_days')),
+                            ]),
+                    ]),
+
+                Section::make(__('laravel-licensing-filament-manager::license-template.form.configuration'))
+                    ->schema([
+                        Forms\Components\KeyValue::make('base_configuration')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.base_configuration'))
+                            ->keyLabel(__('laravel-licensing-filament-manager::common.key'))
+                            ->valueLabel(__('laravel-licensing-filament-manager::common.value'))
+                            ->helperText(__('laravel-licensing-filament-manager::license-template.help.base_configuration')),
+
+                        Forms\Components\KeyValue::make('features')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.features'))
+                            ->keyLabel(__('laravel-licensing-filament-manager::common.key'))
+                            ->valueLabel(__('laravel-licensing-filament-manager::common.value'))
+                            ->helperText(__('laravel-licensing-filament-manager::license-template.help.features')),
+
+                        Forms\Components\KeyValue::make('entitlements')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.entitlements'))
+                            ->keyLabel(__('laravel-licensing-filament-manager::common.key'))
+                            ->valueLabel(__('laravel-licensing-filament-manager::common.value'))
+                            ->helperText(__('laravel-licensing-filament-manager::license-template.help.entitlements')),
+                    ]),
+
+                Section::make(__('laravel-licensing-filament-manager::license-template.form.metadata'))
+                    ->columnSpan(2)
+                    ->schema([
+                        Forms\Components\KeyValue::make('meta')
+                            ->label(__('laravel-licensing-filament-manager::license-template.fields.meta'))
+                            ->keyLabel(__('laravel-licensing-filament-manager::common.key'))
+                            ->valueLabel(__('laravel-licensing-filament-manager::common.value')),
+                    ])
+                    ->collapsible()
+                    ->collapsed(),
+            ]);
+    }
+}

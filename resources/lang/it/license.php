@@ -67,6 +67,7 @@ return [
         'usages' => 'Utilizzi',
         'renewals' => 'Rinnovi',
         'transfers' => 'Trasferimenti',
+        'trials' => 'Prove',
     ],
 
     'security' => [

@@ -25,8 +25,8 @@ class LicenseUsageTable
                     ->limit(10)
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('license.scope.name')
-                    ->label(__('laravel-licensing-filament-manager::license.fields.license_scope'))
+                Tables\Columns\TextColumn::make('license.template.name')
+                    ->label(__('laravel-licensing-filament-manager::license.fields.template'))
                     ->badge()
                     ->color('info')
                     ->toggleable(),

@@ -78,42 +78,6 @@ class ViewLicense extends ViewRecord
                         ->send();
                 }),
 
-            Actions\Action::make('show_key')
-                ->label(__('laravel-licensing-filament-manager::license.actions.show_key'))
-                ->icon('heroicon-o-key')
-                ->visible(fn () => $this->record->canRetrieveKey())
-                ->action(function () {
-                    $key = $this->record->retrieveKey();
-
-                    Notification::make()
-                        ->title(__('laravel-licensing-filament-manager::license.notifications.key_retrieved'))
-                        ->body($key
-                            ? __('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $key])
-                            : __('laravel-licensing-filament-manager::license.notifications.key_unavailable'))
-                        ->success()
-                        ->persistent()
-                        ->send();
-                }),
-
-            Actions\Action::make('regenerate_key')
-                ->label(__('laravel-licensing-filament-manager::license.actions.regenerate_key'))
-                ->icon('heroicon-o-arrow-path')
-                ->color('gray')
-                ->visible(fn () => $this->record->canRegenerateKey())
-                ->requiresConfirmation()
-                ->action(function () {
-                    $newKey = $this->record->regenerateKey();
-
-                    Notification::make()
-                        ->title(__('laravel-licensing-filament-manager::license.notifications.key_regenerated'))
-                        ->body(__('laravel-licensing-filament-manager::license.notifications.key_value', ['key' => $newKey]))
-                        ->success()
-                        ->persistent()
-                        ->send();
-
-                    $this->refreshFormData(['key_hash']);
-                }),
-
             Actions\EditAction::make()
                 ->label(__('laravel-licensing-filament-manager::common.actions.edit')),
         ];
